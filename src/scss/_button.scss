@@ -25,7 +25,20 @@ button {
 	&:active {
 		transform: scale(0.99);
 	}
-
+    
+	&:disabled {
+		background: #bfbfbf !important; 
+	}
+	
+	&:disabled span.text {
+		color:#777777 !important;
+		text-shadow: 0px 1px 0px rgba(255,255,255,.5);
+	}
+	
+	&:disabled span.icon {
+		filter: grayscale(100%) contrast(33%) brightness(1.5);
+	}
+	
 	span.icon {
 		font-size:24px;
 	}
