@@ -4,7 +4,7 @@
 </script>
 
 <style type="text/scss">
-	.container {
+	section {
 		display:flex;
 		flex-flow:row wrap;
 		gap:15px;
@@ -16,11 +16,11 @@
 	}
 </style>
 
-<div class="container">
+<section>
 	{#each Suits as suit}
 		{#each Ranks as rank}
 			<Card {suit} {rank} />
 		{/each}
 	{/each}
 	<Card suit={Suit.Joker} />
-</div>
+</section>
