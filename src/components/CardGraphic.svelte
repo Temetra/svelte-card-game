@@ -1,7 +1,7 @@
 <script lang="ts">
 	import type { SvelteComponent } from "svelte/internal";
-	import Background from "../cards/CardBackground.svg"
-	import { Suit, Rank, getCardComponent } from "~/modules/Cards.ts"
+	import Background from "@/cards/CardBackground.svg";
+	import { Suit, Rank, getCardComponent } from "@/modules/Cards";
 
 	export let suit: Suit = Suit.Joker;
 	export let rank: Rank = Rank.Ace;

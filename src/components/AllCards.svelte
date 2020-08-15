@@ -1,6 +1,6 @@
 <script lang="ts">
-	import Card from "~/Card.svelte"
-	import { Suits, Ranks, Suit } from "~/modules/Cards.ts"
+	import CardGraphic from "@/components/CardGraphic.svelte";
+	import { Suits, Ranks, Suit } from "@/modules/Cards";
 </script>
 
 <style type="text/scss">
@@ -19,8 +19,8 @@
 <section>
 	{#each Suits as suit}
 		{#each Ranks as rank}
-			<Card {suit} {rank} />
+			<CardGraphic {suit} {rank} />
 		{/each}
 	{/each}
-	<Card suit={Suit.Joker} />
+	<CardGraphic suit={Suit.Joker} />
 </section>

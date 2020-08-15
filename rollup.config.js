@@ -8,11 +8,11 @@ import typescript from '@rollup/plugin-typescript';
 
 const production = !process.env.ROLLUP_WATCH;
 
+import path from "path";
 import alias from "@rollup/plugin-alias";
 import babel from "@rollup/plugin-babel";
 import scss from "rollup-plugin-scss";
 import svelteSVG from "rollup-plugin-svelte-svg";
-const pathTo = require('./paths.config.js');
 
 function serve() {
 	let server;
@@ -44,23 +44,10 @@ export default {
 		file: 'public/build/bundle.js'
 	},
 	plugins: [
-		/*
-		"alias" rewrites import statements before the file is resolved
-		Three specific shortcuts are replaced anywhere in the import path
-			~/scss/ ~/stores/ ~/modules/
-		This works for web-worker imports
-			import TestWorker from "web-worker:~/modules/test.worker";
-		The last is a components shortcut which changes imports that start with ~/
-			import Header from "~/Header.svelte";
-		*/
+		// Import aliases for files other than .ts
 		alias({
-			resolve: [".svelte", ".ts", ".js"],
-			entries: [
-				{ find: /~\/scss\//, replacement: pathTo("scss") },
-				{ find: /~\/stores\//, replacement: pathTo("stores") },
-				{ find: /~\/modules\//, replacement: pathTo("modules") },
-				{ find: /^~\//, replacement: pathTo("components") },
-			]
+			entries: [{ find: "@", replacement: path.resolve(__dirname, "src") }],
+			customResolver: resolve({ extensions: [".svelte", ".svg", ".scss"] })
 		}),
 
 		// If you have external dependencies installed from
@@ -80,7 +67,7 @@ export default {
 			// Processes SCSS embedded within Svelte files
 			preprocess: sveltePreprocess({
 				scss: {
-					includePaths: [pathTo("scss")],
+					includePaths: ["./src/scss"],
 					sourceMap: !production
 				}
 			}),
@@ -88,15 +75,15 @@ export default {
 			emitCss: true
 		}),
 
+		// Import SVG files as components
+		svelteSVG(),
+
 		// Processes SCSS imported from other JS files and plugins
 		scss({
 			output: "public/build/bundle.css",
 			outputStyle: production ? "compressed" : "",
 			sourceMap: !production,
 		}),
-
-		// SVG
-		svelteSVG(),
 
 		// Convert CommonJS modules to ES6
 		commonjs(),

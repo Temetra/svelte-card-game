@@ -2,4 +2,8 @@
 // .ts files only propagate to importing modules when saved twice
 
 import { writable } from "svelte/store";
+import type { Card } from "@/modules/Cards";
 
+export const guiEnabled = writable(false);
+export const deck = writable<Card[]>([]);
+export const playerOneHand = writable<Card[]>([]);
