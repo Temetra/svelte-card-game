@@ -26,6 +26,10 @@
 		display:flex;
 		flex-flow:row wrap;
 		gap:15px;
+		width:800px;
+		height:180px;
+		padding-left: 50px;
+		perspective: 1000px;
 	}
 </style>
 

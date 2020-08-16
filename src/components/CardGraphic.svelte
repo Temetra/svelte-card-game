@@ -11,14 +11,22 @@
 
 <style type="text/scss">
 	@keyframes fadein {
-		from { opacity: 0; top: -20px; }
-		to { opacity: 1; top: 0; }
+		from {
+			opacity:0;
+			top:-50px;
+			transform:rotateX(45deg);
+		}
+		to {
+			opacity:1;
+			top: 0;
+			transform:rotateX(30deg);
+		}
 	}
 	
 	section {
 		position:relative;
-		animation: fadein 500ms;
-
+		animation:fadein 400ms forwards;
+		
 		// Card dimensions with fallback
 		width:var(--card-width, 500px);
 		height:var(--card-height, 700px);
