@@ -35,11 +35,14 @@ async function startDealing() {
 }
 
 async function dealCard() {
-	// Delay before dealing
-	await waitFor(randomFromRange(225, 275));
+	const avgDelay = 250;
+	const delayDeviation = 25;
+	const audioDelay = 100;
+	const delayFrom = avgDelay - delayDeviation - audioDelay;
+	const delayTo = avgDelay + delayDeviation - audioDelay;
 	
-	// Audio feedback
-	playSound("card")
+	// Delay before dealing
+	await waitFor(randomFromRange(delayFrom, delayTo));
 	
 	// Remove a random card from deck 
 	let drawn: Card;
@@ -53,6 +56,10 @@ async function dealCard() {
 		hand.push(drawn);
 		return hand;
 	});
+	
+	// Audio feedback
+	await waitFor(audioDelay);
+	playSound("card")
 }
 
 async function finishDealing() {
