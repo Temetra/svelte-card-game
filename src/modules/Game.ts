@@ -37,7 +37,7 @@ async function startDealing() {
 async function dealCard() {
 	const avgDelay = 400;
 	const delayDeviation = 25;
-	const audioDelay = 150;
+	const audioDelay = 0;
 	const delayFrom = avgDelay - delayDeviation - audioDelay;
 	const delayTo = avgDelay + delayDeviation - audioDelay;
 	
