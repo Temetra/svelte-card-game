@@ -14,19 +14,22 @@
 		from {
 			opacity: 0;
 			top: -50px;
-			transform: rotateX(30deg) translateZ(50px);
+			transform: rotateX(-30deg) translateZ(100px) translateY(-100px);
+			filter: drop-shadow(0px 100px 8px rgba(0, 0, 0, 0.5));
 		}
 		to {
 			opacity: 1;
 			top: 0;
 			transform: rotateX(0deg) translateZ(0px);
+			filter: drop-shadow(0px 1px 2px rgba(0,0,0,0.25));
 		}
 	}
 	
 	section {
 		position: relative;
 		animation: fadein 400ms forwards;
-		
+		filter: drop-shadow(0px 0px 4px rgba(0,0,0,0.25));
+
 		// Card dimensions with fallback
 		width:var(--card-width, 500px);
 		height:var(--card-height, 700px);

@@ -21,7 +21,8 @@
 	}
 
 	.table {
-		display:flex;
+		transform-style: preserve-3d;
+		display: flex;
 		height: 100%;
 		width: 100%;
 		justify-content: center;
@@ -31,6 +32,7 @@
 	}
 
 	.cards {
+		transform-style: preserve-3d;
 		display: flex;
 		flex-flow: row wrap;
 		gap: 15px;
