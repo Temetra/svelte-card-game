@@ -97,3 +97,21 @@ button.purple {
 		outline-color:#673AB7;
 	}
 }
+
+button.cyan {
+	color:white;
+	background:#00796B;
+
+	&:hover {
+		background:#009688;
+		color:white;
+	}
+
+	&:focus {
+		outline-color:#004D40;
+	}
+
+	&:hover:focus {
+		outline-color:#00796B;
+	}
+}

@@ -2,10 +2,10 @@ import type { Card } from "./Cards";
 import { Suits, Ranks } from "./Cards";
 import { waitFor } from "./Fetching";
 import { playSound } from "./Audio";
-import { guiEnabled, deck, playerOneHand } from "@/stores/datastore";
+import { controlsEnabled, deck, playerOneHand } from "@/stores/datastore";
 
 export async function prepareGame() {
-	guiEnabled.set(true);
+	controlsEnabled.set(true);
 }
 
 export function requestNewCards() {
@@ -20,7 +20,7 @@ export function requestNewCards() {
 
 async function startDealing() {
 	// Disable button
-	guiEnabled.set(false);
+	controlsEnabled.set(false);
 
 	// Audio feedback
 	playSound("blip");
@@ -37,7 +37,7 @@ async function startDealing() {
 async function dealCard() {
 	const avgDelay = 400;
 	const delayDeviation = 25;
-	const audioDelay = 200;
+	const audioDelay = 150;
 	const delayFrom = avgDelay - delayDeviation - audioDelay;
 	const delayTo = avgDelay + delayDeviation - audioDelay;
 	
@@ -65,7 +65,7 @@ async function dealCard() {
 async function finishDealing() {
 	// Enable button
 	await waitFor(500);
-	guiEnabled.set(true);
+	controlsEnabled.set(true);
 }
 
 function randomFromRange(min: number, max: number) : number {

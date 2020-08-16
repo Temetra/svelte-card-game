@@ -12,20 +12,20 @@
 <style type="text/scss">
 	@keyframes fadein {
 		from {
-			opacity:0;
-			top:-50px;
-			transform:rotateX(45deg);
+			opacity: 0;
+			top: -50px;
+			transform: rotateX(30deg) translateZ(50px);
 		}
 		to {
-			opacity:1;
+			opacity: 1;
 			top: 0;
-			transform:rotateX(30deg);
+			transform: rotateX(0deg) translateZ(0px);
 		}
 	}
 	
 	section {
-		position:relative;
-		animation:fadein 400ms forwards;
+		position: relative;
+		animation: fadein 400ms forwards;
 		
 		// Card dimensions with fallback
 		width:var(--card-width, 500px);
@@ -33,8 +33,8 @@
 
 		:global(svg) {
 			position: absolute;
-			top:0;
-			left:0;
+			top: 0;
+			left: 0;
 		}
 	}
 </style>
