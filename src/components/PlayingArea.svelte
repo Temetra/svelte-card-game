@@ -29,6 +29,7 @@
   		align-items: center;
 		background: #2E7D32;
 		background-image: url("/images/felt.jpg");
+		background-position: 50% 50%;
 	}
 
 	.cards {
