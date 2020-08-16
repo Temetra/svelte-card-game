@@ -10,8 +10,14 @@
 </script>
 
 <style type="text/scss">
+	@keyframes fadein {
+		from { opacity: 0; top: -20px; }
+		to { opacity: 1; top: 0; }
+	}
+	
 	section {
 		position:relative;
+		animation: fadein 500ms;
 
 		// Card dimensions with fallback
 		width:var(--card-width, 500px);
