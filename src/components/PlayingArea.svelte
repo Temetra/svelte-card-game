@@ -49,7 +49,7 @@
 		<div class="table">
 			<div class="cards">
 				{#each $playerOneHand as card}
-					<CardGraphic suit={card.suit} rank={card.rank} />
+					<CardGraphic suit={card.suit} rank={card.rank} mode="deal" />
 				{/each}
 			</div>
 		</div>

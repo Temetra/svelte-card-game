@@ -5,12 +5,30 @@
 
 	export let suit: Suit = Suit.Joker;
 	export let rank: Rank = Rank.Ace;
+	export let mode: string = "";
 
+	$: deal = (mode === "deal");
+	$: spin = (mode === "spin");
 	let cardComponent: SvelteComponent = getCardComponent(suit, rank);
 </script>
 
 <style type="text/scss">
-	@keyframes fadein {
+	section {
+		position: relative;
+		filter: drop-shadow(0px 0px 4px rgba(0,0,0,0.25));
+
+		// Card dimensions with fallback
+		width:var(--card-width, 500px);
+		height:var(--card-height, 700px);
+
+		:global(svg) {
+			position: absolute;
+			top: 0;
+			left: 0;
+		}
+	}
+
+	@keyframes deal-card {
 		from {
 			opacity: 0;
 			top: -50px;
@@ -24,25 +42,30 @@
 			filter: drop-shadow(0px 1px 2px rgba(0,0,0,0.25));
 		}
 	}
-	
-	section {
-		position: relative;
-		animation: fadein 400ms forwards;
-		filter: drop-shadow(0px 0px 4px rgba(0,0,0,0.25));
 
-		// Card dimensions with fallback
-		width:var(--card-width, 500px);
-		height:var(--card-height, 700px);
+	section.deal {
+		animation: deal-card 400ms forwards;
+	}
 
-		:global(svg) {
-			position: absolute;
-			top: 0;
-			left: 0;
+	@keyframes spin-card {
+		0% {
+			transform: rotateY(0deg);
 		}
+		25% {
+			transform: rotateY(360deg);
+		}
+		100% {
+			transform: rotateY(360deg);
+		}
+	}
+
+	section.spin {
+		animation: spin-card 3000ms infinite;
+		animation-play-state: running;
 	}
 </style>
 
-<section>
+<section class:deal class:spin>
 	<Background />
 	<svelte:component this={cardComponent}/>
 </section>
