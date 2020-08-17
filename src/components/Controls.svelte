@@ -11,7 +11,8 @@
 		display: flex;
 		flex-flow: row wrap;
 		justify-content: center;
-		gap: 15px;
+		row-gap: 15px;
+		column-gap: 15px;
 		margin: 20px;
 		--card-width: #{(500px/32)};
 		--card-height: #{(700px/32)};

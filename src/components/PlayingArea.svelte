@@ -36,7 +36,8 @@
 		transform-style: preserve-3d;
 		display: flex;
 		flex-flow: row wrap;
-		gap: 15px;
+		row-gap: 15px;
+		column-gap: 15px;
 		width: (500px/4) * 5 + 15px * 4;
 		height: (700px/4);
 		--card-width: #{(500px/4)};
