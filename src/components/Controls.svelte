@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { requestNewCards } from "@/modules/Game";
 	import { controlsEnabled } from "@/stores/datastore";
-	import CardGraphic from "@/components/CardGraphic.svelte";
+	import Card from "@/components/Card.svelte";
 	$: mode = $controlsEnabled ? "spin" : "";
 </script>
 
@@ -25,7 +25,7 @@
 
 <section>
 	<button type="button" class="cyan" on:click={requestNewCards} disabled={!$controlsEnabled}>
-		<span class="icon"><CardGraphic suit={1} rank={1} {mode} /></span>
+		<span class="icon"><Card suit={1} rank={1} {mode} /></span>
 		<span class="text">Deal cards</span>
 	</button>
 </section>

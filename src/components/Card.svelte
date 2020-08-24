@@ -1,7 +1,7 @@
 <script lang="ts">
-	import type { SvelteComponent } from "svelte/internal";
-	import Background from "@/cards/CardBackground.svg";
-	import { Suit, Rank, getCardComponent } from "@/modules/Cards";
+	import { onMount } from "svelte";
+	import { Suit, Rank, getCardName } from "@/modules/Cards";
+	import { getCardFace, getCardValue } from "@/modules/CardImages";
 
 	export let suit: Suit = Suit.Joker;
 	export let rank: Rank = Rank.Ace;
@@ -9,7 +9,14 @@
 
 	$: deal = (mode === "deal");
 	$: spin = (mode === "spin");
-	let cardComponent: SvelteComponent = getCardComponent(suit, rank);
+
+	let face: HTMLImageElement;
+	let value: HTMLImageElement;
+
+	onMount(() => {
+		face.src = getCardFace();
+		value.src = getCardValue(suit, rank);
+	});
 </script>
 
 <style type="text/scss">
@@ -21,10 +28,12 @@
 		width:var(--card-width, 500px);
 		height:var(--card-height, 700px);
 
-		:global(svg) {
+		img {
 			position: absolute;
 			top: 0;
 			left: 0;
+			width:100%;
+			height:100%;
 		}
 	}
 
@@ -66,6 +75,6 @@
 </style>
 
 <section class:deal class:spin>
-	<Background />
-	<svelte:component this={cardComponent}/>
+	<img bind:this={face} alt="" />
+	<img bind:this={value} alt={getCardName(suit, rank)} />
 </section>

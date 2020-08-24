@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { playerOneHand } from "@/stores/datastore";
-	import CardGraphic from "@/components/CardGraphic.svelte";
+	import Card from "@/components/Card.svelte";
 </script>
 
 <style type="text/scss">
@@ -27,9 +27,18 @@
 		width: 100%;
 		justify-content: center;
   		align-items: center;
-		background: #2E7D32;
-		background-image: url("../images/felt.jpg");
-		background-position: 50% 50%;
+		background-color:#1B6EB8;
+
+		&::before {
+			content: "";
+			position: absolute;
+			width: 100%;
+			height: 100%;
+			background-image: url("../images/grid.svg");
+			background-position: 50% 50%;
+			background-size: 20%;
+			filter:invert(100%) opacity(75%);
+		}
 	}
 
 	.cards {
@@ -50,7 +59,7 @@
 		<div class="table">
 			<div class="cards">
 				{#each $playerOneHand as card}
-					<CardGraphic suit={card.suit} rank={card.rank} mode="deal" />
+					<Card suit={card.suit} rank={card.rank} mode="deal" />
 				{/each}
 			</div>
 		</div>

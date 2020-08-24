@@ -1,29 +1,38 @@
-import { checkResponse } from "./Fetching";
+import { fetchFiles } from "./Fetching";
+import { loading } from "@/stores/datastore";
 
+// Audio context
 const AudioContext = window.AudioContext || window.webkitAudioContext;
 const audioCtx = new AudioContext();
-const sounds: Partial<Record<string, AudioBuffer>> = {};
 
+// In-memory cache for sounds
+let sounds: Partial<Record<string, AudioBuffer>>;
+
+// Returns promise to preload sounds into bank
 export function prepareAudio() {
-	return Promise.all([
-		loadAudio("sounds/blip.mp3"),
-		loadAudio("sounds/card-hard.mp3"),
-		loadAudio("sounds/card-soft.mp3")
-	])
-	.then(values => {
-		sounds.blip = values[0];
-		sounds.card = values[1];
-		sounds.slide = values[2];
-	});
+	const files = {
+		"blip": "sounds/blip.mp3",
+		"card": "sounds/card-hard.mp3",
+		"slide": "sounds/card-soft.mp3"
+	};
+
+	// Return a promise to load images
+	return fetchFiles(files, processResponse, updateProgress)
+		.then(data => sounds = data);
 }
 
-function loadAudio(filename: string): Promise<AudioBuffer> {
-	return fetch(filename)
-		.then(checkResponse)
-		.then(response => response.arrayBuffer())
+// Get ArrayBuffer from response, convert to AudioBuffer
+async function processResponse(response: Response): Promise<AudioBuffer> {
+	return await response.arrayBuffer()
 		.then(arrayBuffer => audioCtx.decodeAudioData(arrayBuffer));
 }
 
+// Update progress store
+function updateProgress(progress: number, total: number) {
+	loading.set({ name:"sounds", progress, total });
+}
+
+// Finds and plays sound
 export function playSound(name: string) {
 	let buffer = sounds[name];
 

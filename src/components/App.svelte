@@ -2,12 +2,18 @@
 	import { onMount } from "svelte";
 	import { prepareAudio } from "@/modules/Audio";
 	import { prepareGame } from "@/modules/Game";
+	import { prepareCardGraphics } from "@/modules/CardImages";
 	import Controls from "@/components/Controls.svelte";
 	import PlayingArea from "@/components/PlayingArea.svelte";
+	import Progress from "@/components/Progress.svelte";
+
+	let ready = false;
 
 	onMount(async () => {
 		await prepareAudio();
+		await prepareCardGraphics();
 		await prepareGame();
+		ready = true;
 	});
 </script>
 
@@ -24,6 +30,10 @@
 </style>
 
 <section>
-	<Controls />
-	<PlayingArea />
+	{#if ready}
+		<Controls />
+		<PlayingArea />
+	{:else}
+		<Progress />
+	{/if}
 </section>
