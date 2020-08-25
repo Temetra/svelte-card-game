@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { playerOneHand } from "@/stores/datastore";
-	import Card from "@/components/Card.svelte";
+	import CardGraphic from "@/components/CardGraphic.svelte";
 </script>
 
 <style type="text/scss">
@@ -66,7 +66,7 @@
 		<div class="table grid">
 			<div class="cards">
 				{#each $playerOneHand as card}
-					<Card suit={card.suit} rank={card.rank} mode="deal" />
+					<CardGraphic {card} />
 				{/each}
 			</div>
 		</div>

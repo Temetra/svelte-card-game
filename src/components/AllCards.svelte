@@ -1,6 +1,7 @@
 <script lang="ts">
-	import Card from "@/components/Card.svelte"
-	import { Suits, Ranks, Suit } from "@/modules/Cards"
+	import { Suits, Ranks, Suit, Rank, State } from "@/modules/Cards"
+	import CardGraphic from "@/components/CardGraphic.svelte"
+	const state = State.Default;
 </script>
 
 <style type="text/scss">
@@ -17,10 +18,10 @@
 </style>
 
 <div class="container">
-	<Card suit={Suit.Joker} />
+	<CardGraphic card={{suit:Suit.Joker, rank:Rank.Ace, state}} />
 	{#each Suits as suit}
 		{#each Ranks as rank}
-			<Card {suit} {rank} />
+			<CardGraphic card={{suit, rank, state}} />
 		{/each}
 	{/each}
 </div>

@@ -1,5 +1,5 @@
-import type { Card } from "./Cards";
-import { Suits, Ranks } from "./Cards";
+import { Card, State } from "./Cards";
+import { Suits, Ranks, State as CardState } from "./Cards";
 import { waitFor } from "./Fetching";
 import { playSound } from "./Audio";
 import { controlsEnabled, deck, playerOneHand } from "@/stores/datastore";
@@ -10,11 +10,12 @@ export async function prepareGame() {
 
 export function requestNewCards() {
 	return startDealing()
-		.then(dealCard)
-		.then(dealCard)
-		.then(dealCard)
-		.then(dealCard)
-		.then(dealCard)
+		.then(dealAllCards)
+		.then(animateDealtCard)
+		.then(animateDealtCard)
+		.then(animateDealtCard)
+		.then(animateDealtCard)
+		.then(animateDealtCard)
 		.then(finishDealing);
 }
 
@@ -34,29 +35,42 @@ async function startDealing() {
 	shuffleDeck();
 }
 
-async function dealCard() {
+async function dealAllCards() {
+	// Array to store drawn cards
+	let drawn: Card[];
+
+	// Draw 5 cards
+	deck.update(cards => {
+		drawn = cards.splice(0, 5);
+		return cards;
+	});
+
+	// Change state of cards
+	drawn.map(card => card.state = CardState.Hidden);
+
+	// Add card to hand
+	playerOneHand.update(hand => {
+		hand.push(...drawn);
+		return hand;
+	});
+}
+
+async function animateDealtCard() {
 	const avgDelay = 400;
 	const delayDeviation = 25;
 	const audioDelay = 0;
 	const delayFrom = avgDelay - delayDeviation - audioDelay;
 	const delayTo = avgDelay + delayDeviation - audioDelay;
-	
+
 	// Delay before dealing
 	await waitFor(randomFromRange(delayFrom, delayTo));
-	
-	// Remove a random card from deck 
-	let drawn: Card;
-	deck.update(x => {
-		drawn = x.shift();
-		return x;
-	});
 
-	// Add card to hand
+	// Find first hidden card in hand and change state
 	playerOneHand.update(hand => {
-		hand.push(drawn);
+		hand.find(x => x.state === State.Hidden).state = State.Dealing;
 		return hand;
 	});
-	
+
 	// Audio feedback
 	await waitFor(audioDelay);
 	playSound("card")
@@ -75,11 +89,12 @@ function randomFromRange(min: number, max: number) : number {
 function resetDeck() {
 	// Create new array
 	const result: Card[] = [];
+	const state = CardState.Default;
 
 	// Iterate over suits and ranks, adding to array
 	for (const suit of Suits) {
 		for (const rank of Ranks) {
-			result.push({ suit, rank });
+			result.push({ suit, rank, state });
 		}
 	}
 

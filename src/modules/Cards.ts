@@ -22,9 +22,18 @@ export enum Suit {
 	Joker
 }
 
+export enum State {
+	Default = 1,
+	Hidden,
+	Dealing,
+	Spinning,
+	Flipped,
+}
+
 export interface Card {
 	rank: Rank,
-	suit: Suit
+	suit: Suit,
+	state: State
 }
 
 export const Ranks: Rank[] = Object.keys(Rank).filter(x => !Number(x)).map(x => Rank[x]);

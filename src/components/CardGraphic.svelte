@@ -1,21 +1,17 @@
 <script lang="ts">
 	import { onMount } from "svelte";
-	import { Suit, Rank, getCardName } from "@/modules/Cards";
+	import type { Card } from "@/modules/Cards";
+	import { Suit, Rank, State, getCardName } from "@/modules/Cards";
 	import { getCardFace, getCardValue } from "@/modules/CardImages";
 
-	export let suit: Suit = Suit.Joker;
-	export let rank: Rank = Rank.Ace;
-	export let mode: string = "";
-
-	$: deal = (mode === "deal");
-	$: spin = (mode === "spin");
+	export let card: Card = { suit: Suit.Joker, rank:Rank.Ace, state:State.Default };
 
 	let face: HTMLImageElement;
 	let value: HTMLImageElement;
 
 	onMount(() => {
 		face.src = getCardFace();
-		value.src = getCardValue(suit, rank);
+		value.src = getCardValue(card.suit, card.rank);
 	});
 </script>
 
@@ -72,9 +68,17 @@
 		animation: spin-card 3000ms infinite;
 		animation-play-state: running;
 	}
+
+	section.hide {
+		opacity: 0;
+	}
 </style>
 
-<section class:deal class:spin>
+<section 
+	class:hide={card.state === State.Hidden}
+	class:deal={card.state === State.Dealing} 
+	class:spin={card.state === State.Spinning}
+>
 	<img bind:this={face} alt="" />
-	<img bind:this={value} alt={getCardName(suit, rank)} />
+	<img bind:this={value} alt={getCardName(card.suit, card.rank)} />
 </section>
