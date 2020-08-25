@@ -6,6 +6,9 @@
 <style type="text/scss">
 	section {
 		grid-area: playing-area;
+		display: flex;
+		justify-content: center;
+		align-items: center;
 		overflow: hidden;
 		perspective: 1000px;
 	}
@@ -13,20 +16,24 @@
 	.container {
 		transform-style: preserve-3d;
 		transform: rotateX(30deg);
-		position: absolute;
-		height: 200%;
-		width: 200%;
-		top: -50%;
-		left: -50%;
 	}
 
 	.table {
 		transform-style: preserve-3d;
 		display: flex;
-		height: 100%;
-		width: 100%;
+		height: 200rem;
+		width: 200rem;
 		justify-content: center;
   		align-items: center;
+	}
+
+	// .table.felt {
+	// 	background: #2E7D32;
+	// 	background-image: url("../images/felt.jpg");
+	// 	background-position: 50% 50%;
+	// }
+
+	.table.grid {
 		background-color:#1B6EB8;
 
 		&::before {
@@ -36,7 +43,7 @@
 			height: 100%;
 			background-image: url("../images/grid.svg");
 			background-position: 50% 50%;
-			background-size: 20%;
+			background-size: 19rem;
 			filter:invert(100%) opacity(75%);
 		}
 	}
@@ -56,7 +63,7 @@
 
 <section>
 	<div class="container">
-		<div class="table">
+		<div class="table grid">
 			<div class="cards">
 				{#each $playerOneHand as card}
 					<Card suit={card.suit} rank={card.rank} mode="deal" />
