@@ -7,11 +7,27 @@ export function checkResponse(response: Response) {
 	else return response;
 }
 
-export function fetchFiles<TKey extends string|number|symbol, TData>(
-	files: Record<TKey, string>, 
-	processResponse: {(response: Response): PromiseLike<TData>}, 
-	updateProgress: {(progress: number, total: number): void} = () => {}
-): Promise<Partial<Record<TKey, TData>>> {
+interface FileSourceMap {
+	[key: string]: string;
+}
+
+interface FileResultMap<T> {
+	[key: string]: T;
+}
+
+interface ProcessResponseFunc<T> {
+	(response: Response): PromiseLike<T>;
+}
+
+interface UpdateProgressFunc {
+	(progress: number, total: number): void;
+}
+
+export function fetchFiles<TData>(
+	files: FileSourceMap, 
+	processResponse: ProcessResponseFunc<TData>, 
+	updateProgress: UpdateProgressFunc = () => {}
+): Promise<FileResultMap<TData>> {
 	// Convert files to array of key/values
 	let filesArr = Object.entries<string>(files);
 
@@ -20,7 +36,7 @@ export function fetchFiles<TKey extends string|number|symbol, TData>(
 	let count = 0;
 
 	// Create output dictionary
-	let result: Partial<Record<TKey, TData>> = {};
+	let result: FileResultMap<TData> = {};
 
 	// Create array of fetch requests
 	const promises: PromiseLike<any>[] = [];

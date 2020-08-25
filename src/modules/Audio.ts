@@ -6,7 +6,7 @@ const AudioContext = window.AudioContext || window.webkitAudioContext;
 const audioCtx = new AudioContext();
 
 // In-memory cache for sounds
-let sounds: Partial<Record<string, AudioBuffer>>;
+let sounds: Record<string, AudioBuffer>;
 
 // Returns promise to preload sounds into bank
 export function prepareAudio() {

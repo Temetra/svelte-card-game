@@ -3,7 +3,7 @@ import { fetchFiles } from "./Fetching";
 import { loading } from "@/stores/datastore";
 
 // In-memory cache for card images
-let images: Partial<Record<string, string>>;
+let images: Record<string, string>;
 
 // Returns promise to preload images into bank
 export function prepareCardGraphics() {
