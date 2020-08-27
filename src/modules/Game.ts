@@ -4,6 +4,10 @@ import { waitFor } from "./Fetching";
 import { playSound } from "./Audio";
 import { controlsEnabled, deck, playerOneHand } from "@/stores/datastore";
 
+const avgDealDelay = 400;
+const dealDelayDeviation = 25;
+const audioDelay = 0;
+
 export async function prepareGame() {
 	controlsEnabled.set(true);
 }
@@ -56,11 +60,8 @@ async function dealAllCards() {
 }
 
 async function animateDealtCard() {
-	const avgDelay = 400;
-	const delayDeviation = 25;
-	const audioDelay = 0;
-	const delayFrom = avgDelay - delayDeviation - audioDelay;
-	const delayTo = avgDelay + delayDeviation - audioDelay;
+	const delayFrom = avgDealDelay - dealDelayDeviation - audioDelay;
+	const delayTo = avgDealDelay + dealDelayDeviation - audioDelay;
 
 	// Delay before dealing
 	await waitFor(randomFromRange(delayFrom, delayTo));
@@ -77,8 +78,16 @@ async function animateDealtCard() {
 }
 
 async function finishDealing() {
+	// Wait for last card to finish animating
+	await waitFor(avgDealDelay + dealDelayDeviation);
+
+	// Change state of cards
+	playerOneHand.update(hand => {
+		hand.map(card => card.state = CardState.Default);
+		return hand;
+	});
+	
 	// Enable button
-	await waitFor(500);
 	controlsEnabled.set(true);
 }
 

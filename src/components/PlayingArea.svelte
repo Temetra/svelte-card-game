@@ -50,6 +50,7 @@
 
 	.cards {
 		transform-style: preserve-3d;
+		transform: translateZ(1px);
 		display: flex;
 		flex-flow: row wrap;
 		row-gap: 15px;
