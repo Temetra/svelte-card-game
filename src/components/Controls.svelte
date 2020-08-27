@@ -26,6 +26,10 @@
 		--card-height: #{(700px/32)};
 	}
 
+	.icon {
+		perspective: 100px;
+	}
+
 	.text {
 		margin-left:4px;
 	}

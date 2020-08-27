@@ -21,10 +21,10 @@
 	.table {
 		transform-style: preserve-3d;
 		display: flex;
+		justify-content: center;
+		align-items: center;
 		height: 200rem;
 		width: 200rem;
-		justify-content: center;
-  		align-items: center;
 	}
 
 	// .table.felt {
@@ -43,7 +43,7 @@
 			height: 100%;
 			background-image: url("../images/grid.svg");
 			background-position: 50% 50%;
-			background-size: 19rem;
+			background-size: 16.5%;
 			filter:invert(100%) opacity(75%);
 		}
 	}
