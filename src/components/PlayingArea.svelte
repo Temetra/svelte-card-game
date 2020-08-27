@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { handleCardClick } from "@/modules/Game";
 	import { playerOneHand } from "@/stores/datastore";
 	import CardGraphic from "@/components/CardGraphic.svelte";
 </script>
@@ -67,7 +68,7 @@
 		<div class="table grid">
 			<div class="cards">
 				{#each $playerOneHand as card}
-					<CardGraphic {card} />
+					<CardGraphic {card} on:click={handleCardClick} />
 				{/each}
 			</div>
 		</div>

@@ -12,6 +12,7 @@ export async function prepareGame() {
 	controlsEnabled.set(true);
 }
 
+// Sequence for dealing a hand from a freshly shuffled deck
 export function requestNewCards() {
 	return startDealing()
 		.then(dealAllCards)
@@ -126,5 +127,18 @@ function shuffleDeck() {
 		}
 		
 		return array;
+	});
+}
+
+// Player clicked on card in hand
+export function handleCardClick(event: CustomEvent<Card>) {
+	// Audio feedback
+	playSound("card")
+	
+	// Find card in hand and set state to flipped
+	playerOneHand.update(hand => {
+		let card = hand.find(x => x == event.detail);
+		card.state = card.state == State.Default ? State.Flipped : State.Default;
+		return hand;
 	});
 }

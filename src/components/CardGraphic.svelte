@@ -1,13 +1,14 @@
 <script lang="ts">
+	import { createEventDispatcher } from "svelte";
 	import type { Card } from "@/modules/Cards";
 	import { Suit, Rank, State, getCardName } from "@/modules/Cards";
 	import { getCardTexture, getCardFace, getCardBack } from "@/modules/CardImages";
 
 	export let card: Card = { suit: Suit.Joker, rank:Rank.Ace, state:State.Default };
 
-	function flipCard() {
-		card.state = card.state == State.Default ? State.Flipped : State.Default;
-	}
+	// Dispatch card click events
+	const dispatch = createEventDispatcher();
+	const handleClick = () => dispatch("click", card);
 </script>
 
 <style type="text/scss">
@@ -121,7 +122,7 @@
 	class:deal={card.state === State.Dealing} 
 	class:spin={card.state === State.Spinning}
 	class:hide={card.state === State.Hidden}
-	on:click={flipCard}
+	on:click={handleClick}
 >
 	<img src={getCardTexture()} class="texture" alt="" />
 	<img src={getCardFace(card)} class="face" alt={getCardName(card.suit, card.rank)} />
