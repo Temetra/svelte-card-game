@@ -8,8 +8,11 @@
 	let card: Card;
 
 	$: {
-		let cardState: CardState = $controlsEnabled ? CardState.Spinning : CardState.Default;
-		card = { suit: Suit.Clubs, rank:Rank.Ace, state:cardState };
+		card = { 
+			suit: Suit.Clubs, 
+			rank: Rank.Ace, 
+			state: $controlsEnabled ? CardState.Spinning : CardState.Default 
+		};
 	}
 </script>
 
