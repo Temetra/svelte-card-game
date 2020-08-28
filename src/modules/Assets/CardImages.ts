@@ -1,7 +1,7 @@
-import type { Card } from "./Cards";
-import { Suit, Rank, Suits, Ranks } from "./Cards";
-import { fetchFiles } from "./Fetching";
-import { loading } from "@/stores/datastore";
+import { loadingStatus } from "@/modules/Assets/LoadingStatus";
+import type { Card } from "@/modules/Cards";
+import { Suit, Rank, Suits, Ranks } from "@/modules/Cards";
+import { fetchFiles } from "@/modules/Fetching";
 
 // In-memory cache for card images
 let images: Record<string, string> = {};
@@ -42,7 +42,7 @@ async function processResponse(response: Response): Promise<string> {
 
 // Update progress store
 function updateProgress(progress: number, total: number) {
-	loading.set({ name:"images", progress, total });
+	loadingStatus.set({ name:"images", progress, total });
 }
 
 // Returns base64 image blob for card texture

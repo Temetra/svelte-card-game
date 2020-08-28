@@ -1,5 +1,5 @@
-import { fetchFiles } from "./Fetching";
-import { loading } from "@/stores/datastore";
+import { loadingStatus } from "@/modules/Assets/LoadingStatus";
+import { fetchFiles } from "@/modules/Fetching";
 
 // Audio context
 const AudioContext = window.AudioContext || window.webkitAudioContext;
@@ -29,7 +29,7 @@ async function processResponse(response: Response): Promise<AudioBuffer> {
 
 // Update progress store
 function updateProgress(progress: number, total: number) {
-	loading.set({ name:"sounds", progress, total });
+	loadingStatus.set({ name:"sounds", progress, total });
 }
 
 // Finds and plays sound

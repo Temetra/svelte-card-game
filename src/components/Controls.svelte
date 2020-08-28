@@ -1,17 +1,17 @@
 <script lang="ts">
-	import { requestNewCards } from "@/modules/Game";
+	import { GameState, gameState, requestNewCards } from "@/modules/Game";
 	import type { Card } from "@/modules/Cards";
-	import { Suit, Rank, State as CardState } from "@/modules/Cards";
-	import { controlsEnabled } from "@/stores/datastore";
+	import { Suit, Rank, CardState } from "@/modules/Cards";
 	import CardGraphic from "@/components/CardGraphic.svelte";
 
-	let card: Card;
+	$: disabled = $gameState != GameState.Ready;
 
+	let card: Card;
 	$: {
 		card = { 
 			suit: Suit.Clubs, 
 			rank: Rank.Ace, 
-			state: $controlsEnabled ? CardState.Spinning : CardState.Default 
+			state: disabled ? CardState.Default : CardState.Spinning 
 		};
 	}
 </script>
@@ -39,7 +39,7 @@
 </style>
 
 <section>
-	<button type="button" class="cyan" on:click={requestNewCards} disabled={!$controlsEnabled}>
+	<button type="button" class="cyan" on:click={requestNewCards} {disabled}>
 		<span class="icon"><CardGraphic {card} /></span>
 		<span class="text">Deal cards</span>
 	</button>

@@ -1,7 +1,7 @@
 <script lang="ts">
-	import { Suits, Ranks, Suit, Rank, State } from "@/modules/Cards"
+	import { Suits, Ranks, Suit, Rank, CardState } from "@/modules/Cards"
 	import CardGraphic from "@/components/CardGraphic.svelte"
-	const state = State.Default;
+	const state = CardState.Default;
 </script>
 
 <style type="text/scss">

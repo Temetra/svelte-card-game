@@ -1,6 +1,5 @@
 <script lang="ts">
-	import { handleCardClick } from "@/modules/Game";
-	import { playerOneHand } from "@/stores/datastore";
+	import { handleCardClick, playerOneHand } from "@/modules/Game";
 	import CardGraphic from "@/components/CardGraphic.svelte";
 </script>
 

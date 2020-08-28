@@ -1,7 +1,6 @@
 <script lang="ts">
 	import { onMount } from "svelte";
-	import { prepareGame } from "@/modules/Game";
-	import { loaded } from "@/stores/datastore";
+	import { GameState, gameState, prepareGame } from "@/modules/Game";
 	import Controls from "@/components/Controls.svelte";
 	import PlayingArea from "@/components/PlayingArea.svelte";
 	import Progress from "@/components/Progress.svelte";
@@ -22,10 +21,10 @@
 </style>
 
 <section>
-	{#if $loaded}
+	{#if $gameState == GameState.Preparing}
+		<Progress />
+	{:else}
 		<Controls />
 		<PlayingArea />
-	{:else}
-		<Progress />
 	{/if}
 </section>

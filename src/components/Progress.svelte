@@ -1,7 +1,7 @@
 <script lang="ts">
-	import { loading } from "@/stores/datastore";
-	$: nameValue = $loading ? $loading.name : "";
-	$: barValue = $loading && $loading.progress ? $loading.progress / $loading.total : 0;
+	import { loadingStatus } from "@/modules/Assets";
+	$: nameValue = $loadingStatus ? $loadingStatus.name : "";
+	$: barValue = $loadingStatus && $loadingStatus.progress ? $loadingStatus.progress / $loadingStatus.total : 0;
 </script>
 
 <style type="text/scss">
