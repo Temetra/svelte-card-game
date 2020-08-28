@@ -14,6 +14,7 @@ import alias from "@rollup/plugin-alias";
 import babel from "@rollup/plugin-babel";
 import scss from "rollup-plugin-scss";
 import svelteSVG from "rollup-plugin-svelte-svg";
+import visualizer from "rollup-plugin-visualizer";
 
 export default {
 	input: 'src/main.ts',
@@ -96,7 +97,10 @@ export default {
 
 		// If we're building for production (npm run build
 		// instead of npm run dev), minify
-		production && terser()
+		production && terser(),
+
+		// Bundle statistics
+		visualizer()
 	],
 	watch: {
 		clearScreen: false
