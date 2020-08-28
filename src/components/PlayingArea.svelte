@@ -14,15 +14,15 @@
 	}
 
 	.container {
-		transform-style: preserve-3d;
-		transform: rotateX(30deg);
+		display: flex;
+		justify-content: center;
+		align-items: center;
 	}
 
 	.table {
 		transform-style: preserve-3d;
-		display: flex;
-		justify-content: center;
-		align-items: center;
+		transform: rotateX(30deg);
+		position: absolute;
 		height: 200rem;
 		width: 200rem;
 	}
@@ -50,13 +50,14 @@
 
 	.cards {
 		transform-style: preserve-3d;
-		transform: translateZ(1px);
+		transform: translateZ(1px) rotateX(30deg);
+		position: absolute;
+		width: (500px/4) * 5 + 15px * 4;
+		height: (700px/4);
 		display: flex;
 		flex-flow: row wrap;
 		row-gap: 15px;
 		column-gap: 15px;
-		width: (500px/4) * 5 + 15px * 4;
-		height: (700px/4);
 		--card-width: #{(500px/4)};
 		--card-height: #{(700px/4)};
 	}
@@ -64,12 +65,11 @@
 
 <section>
 	<div class="container">
-		<div class="table grid">
-			<div class="cards">
-				{#each $playerOneHand as card}
-					<CardGraphic {card} on:click={handleCardClick} />
-				{/each}
-			</div>
+		<div class="table grid"></div>
+		<div class="cards">
+			{#each $playerOneHand as card}
+				<CardGraphic {card} on:click={handleCardClick} />
+			{/each}
 		</div>
 	</div>
 </section>
