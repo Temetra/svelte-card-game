@@ -1,14 +1,19 @@
+import { prepareAudio, playSound } from "./Audio";
+import { prepareCardGraphics } from "./CardImages";
 import { Card, State } from "./Cards";
 import { Suits, Ranks, State as CardState } from "./Cards";
 import { waitFor } from "./Fetching";
-import { playSound } from "./Audio";
-import { controlsEnabled, deck, playerOneHand } from "@/stores/datastore";
+import { loaded, controlsEnabled, deck, playerOneHand } from "@/stores/datastore";
 
 const avgDealDelay = 400;
 const dealDelayDeviation = 25;
 const audioDelay = 0;
 
+// Loads assets and enables interface
 export async function prepareGame() {
+	await prepareAudio();
+	await prepareCardGraphics();
+	loaded.set(true);
 	controlsEnabled.set(true);
 }
 

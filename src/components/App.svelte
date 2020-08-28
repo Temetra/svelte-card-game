@@ -1,19 +1,12 @@
 <script lang="ts">
 	import { onMount } from "svelte";
-	import { prepareAudio } from "@/modules/Audio";
 	import { prepareGame } from "@/modules/Game";
-	import { prepareCardGraphics } from "@/modules/CardImages";
 	import { loaded } from "@/stores/datastore";
 	import Controls from "@/components/Controls.svelte";
 	import PlayingArea from "@/components/PlayingArea.svelte";
 	import Progress from "@/components/Progress.svelte";
 
-	onMount(async () => {
-		await prepareAudio();
-		await prepareCardGraphics();
-		await prepareGame();
-		$loaded = true;
-	});
+	onMount(async () => await prepareGame());
 </script>
 
 <style type="text/scss">
