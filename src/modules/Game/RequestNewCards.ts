@@ -84,7 +84,7 @@ async function finishDealing() {
 	});
 	
 	// Enable button
-	gameState.set(GameState.Ready);
+	gameState.set(GameState.Selecting);
 }
 
 function randomFromRange(min: number, max: number) : number {

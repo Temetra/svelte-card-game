@@ -4,7 +4,8 @@
 	import { Suit, Rank, CardState } from "@/modules/Cards";
 	import CardGraphic from "@/components/CardGraphic.svelte";
 
-	$: disabled = $gameState != GameState.Ready;
+	$: disabled = $gameState != GameState.Ready && 
+		$gameState != GameState.Selecting;
 
 	let card: Card;
 	$: {

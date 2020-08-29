@@ -3,8 +3,11 @@ import type { Card } from "@/modules/Cards";
 
 export enum GameState {
 	Preparing,
-	Dealing,
 	Ready,
+	Dealing,
+	Selecting,
+	Drawing,
+	Finished
 }
 
 export const gameState = writable<GameState>(GameState.Preparing);

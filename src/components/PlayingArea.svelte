@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { handleCardClick, playerOneHand } from "@/modules/Game";
+	import { handleKeyDown, handleCardClick, playerOneHand } from "@/modules/Game";
 	import CardGraphic from "@/components/CardGraphic.svelte";
 </script>
 
@@ -62,6 +62,8 @@
 		--card-height: #{(700px/4)};
 	}
 </style>
+
+<svelte:window on:keydown={handleKeyDown}/>
 
 <section>
 	<div class="container">
