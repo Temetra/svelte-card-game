@@ -1,5 +1,6 @@
 import { GameState, gameState, playerOneHand } from "@/modules/Game/GameState";
 import { flipCard } from "@/modules/Game/FlipCard";
+import { focusCard } from "@/modules/Game/FocusCard";
 import { requestNewCards } from "@/modules/Game/RequestNewCards";
 import type { Card } from "@/modules/Cards";
 
@@ -13,6 +14,12 @@ playerOneHand.subscribe(x => hand = x);
 export function handleCardClick(event: CustomEvent<Card>) {
 	if (state == GameState.Selecting) {
 		flipCard(event.detail);
+	}
+}
+
+export function handleCardHover(event: CustomEvent<{target:Card, enter:boolean}>) {
+	if (state == GameState.Selecting) {
+		focusCard(event.detail);
 	}
 }
 

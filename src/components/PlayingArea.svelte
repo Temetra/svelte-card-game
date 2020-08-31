@@ -1,6 +1,7 @@
 <script lang="ts">
-	import { handleKeyDown, handleCardClick, playerOneHand } from "@/modules/Game";
+	import { handleKeyDown, handleCardClick, handleCardHover, playerOneHand } from "@/modules/Game";
 	import CardGraphic from "@/components/CardGraphic.svelte";
+	import CardShadow from "@/components/CardShadow.svelte";
 </script>
 
 <style type="text/scss">
@@ -48,7 +49,7 @@
 		}
 	}
 
-	.cards {
+	.cards, .shadows {
 		transform-style: preserve-3d;
 		transform: translateZ(1px) rotateX(30deg);
 		position: absolute;
@@ -61,6 +62,10 @@
 		--card-width: #{(500px/4)};
 		--card-height: #{(700px/4)};
 	}
+
+	.shadows {
+		pointer-events: none;
+	}
 </style>
 
 <svelte:window on:keydown={handleKeyDown}/>
@@ -68,9 +73,14 @@
 <section>
 	<div class="container">
 		<div class="table grid"></div>
+		<div class="shadows">
+			{#each $playerOneHand as card, index}
+				<CardShadow {card} {index} />
+			{/each}
+		</div>
 		<div class="cards">
 			{#each $playerOneHand as card}
-				<CardGraphic {card} on:click={handleCardClick} />
+				<CardGraphic {card} on:click={handleCardClick} on:hover={handleCardHover} />
 			{/each}
 		</div>
 	</div>

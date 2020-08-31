@@ -9,6 +9,8 @@
 	// Dispatch card click events
 	const dispatch = createEventDispatcher();
 	const handleClick = () => dispatch("click", card);
+	const handleEnter = () => dispatch("hover", { target:card, enter:true });
+	const handleExit = () => dispatch("hover", { target:card, enter:false });
 </script>
 
 <style type="text/scss">
@@ -39,24 +41,8 @@
 			}
 		}
 
-		&::before {
-			content: '';
-			position: absolute;
-			transform-style: preserve-3d;
-			left:0;
-			width:var(--card-width, 500px);
-			height:var(--card-height, 700px);
-			background:rgba(0,0,0,0.5);
-			box-shadow: 0px 0px 4px black;
-			opacity: 0.5;
-		}
-
 		&.deal {
 			animation: deal-card 400ms forwards;
-
-			&::before {
-				animation: deal-card-shadow 400ms forwards;
-			}
 		}
 
 		&.spin {
@@ -72,12 +58,12 @@
 			transform: scale3d(1,1,1) translateY(0px) translateZ(0px) rotateX(0deg) rotateY(180deg);
 		}
 
-		&.default:hover {
-			transform: scale3d(1.25,1.25,1.25) translateY(50px) translateZ(100px) rotateX(-30deg);
+		&.focused {
+			transform: scale3d(1.25,1.25,1) translateY(50px) translateZ(100px) rotateX(-30deg) rotateY(0deg);
 		}
 
-		&.flipped:hover {
-			transform: scale3d(1.25,1.25,1.25) translateY(50px) translateZ(100px) rotateX(-30deg) rotateY(180deg);
+		&.flipped.focused {
+			transform: scale3d(1.25,1.25,1) translateY(50px) translateZ(100px) rotateX(-30deg) rotateY(180deg);
 		}
 	}
 
@@ -96,33 +82,24 @@
 	@keyframes deal-card {
 		from {
 			opacity:0;
-			transform: translateY(-100px) translateZ(100px) rotateX(-30deg);
+			transform: scale3d(1,1,1) translateY(-100px) translateZ(100px) rotateX(-30deg) rotateY(0deg);
 		}
 		to {
-			transform: translateY(0px) translateZ(0px) rotateX(0deg);
-		}
-	}
-
-	@keyframes deal-card-shadow {
-		from {
-			opacity:0.25;
-			box-shadow: 0px 0px 32px black;
-			transform: scale(0.85,0.85) translateY(100px) translateZ(-50px) rotateX(30deg);
-		}
-		to {
-			box-shadow: 0px 0px 8px black;
-			transform: translateY(0px) translateZ(0px) rotateX(0deg);
+			transform: scale3d(1,1,1) translateY(0px) translateZ(0px) rotateX(0deg) rotateY(0deg);
 		}
 	}
 </style>
 
 <section 
 	class:default={card.state === CardState.Default}
-	class:flipped={card.state === CardState.Flipped}
+	class:flipped={card.state === CardState.Flipped || card.state === CardState.FlippedFocused}
+	class:focused={card.state === CardState.Focused || card.state === CardState.FlippedFocused}
 	class:deal={card.state === CardState.Dealing} 
 	class:spin={card.state === CardState.Spinning}
 	class:hide={card.state === CardState.Hidden}
 	on:click={handleClick}
+	on:mouseover={handleEnter}
+	on:mouseout={handleExit}
 >
 	<img src={getCardTexture()} class="texture" alt="" />
 	<img src={getCardFace(card)} class="face" alt={getCardName(card.suit, card.rank)} />

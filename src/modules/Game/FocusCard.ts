@@ -1,28 +1,20 @@
 import { playerOneHand } from "@/modules/Game/GameState";
 import type { Card } from "@/modules/Cards";
 import { CardState } from "@/modules/Cards";
-import { playSound } from "@/modules/Assets";
 
-export function flipCard(target: Card) {
-	// Audio feedback
-	playSound("card")
-	
+export function focusCard({target, enter}: {target:Card, enter:boolean}) {
 	// Find card in hand and set state
 	playerOneHand.update(hand => {
 		let card = hand.find(x => x == target);
 
 		switch (card.state) {
 			case CardState.Default:
-				card.state = CardState.Flipped;
+			case CardState.Focused:
+				card.state = enter ? CardState.Focused : CardState.Default;
 				break;
 			case CardState.Flipped:
-				card.state = CardState.Default;
-				break;
-			case CardState.Focused:
-				card.state = CardState.FlippedFocused;
-				break;
 			case CardState.FlippedFocused:
-				card.state = CardState.Focused;
+				card.state = enter ? CardState.FlippedFocused : CardState.Flipped;
 				break;
 			default:
 				card.state = CardState.Default;
