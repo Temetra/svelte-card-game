@@ -1,18 +1,18 @@
 module.exports = {
-	"roots": [
+	roots: [
 		"<rootDir>/src"
 	],
-	"testMatch": [
+	testMatch: [
 		"**/__tests__/**/*.+(spec|test).+(ts|tsx|js)"
 	],
-	"transform": {
+	transform: {
 		"^.+\\.svelte$": ["svelte-jester", { "preprocess": true }],
 		"^.+\\.(ts|tsx)$": "ts-jest",
 	},
-	"moduleNameMapper": {
+	moduleNameMapper: {
 		'^@/(.*)$': '<rootDir>/src/$1',
 	},
-	"moduleFileExtensions": [
+	moduleFileExtensions: [
 		"js",
 		"ts",
 		"svelte",
