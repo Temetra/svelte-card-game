@@ -1,13 +1,13 @@
 <script lang="ts">
 	import { GameState, gameState, requestNewCards } from "@/modules/Game";
-	import type { Card } from "@/modules/Cards";
+	import type { StatefulCard } from "@/modules/Cards";
 	import { Suit, Rank, CardState } from "@/modules/Cards";
 	import CardGraphic from "@/components/CardGraphic.svelte";
 
 	$: disabled = $gameState != GameState.Ready && 
 		$gameState != GameState.Selecting;
 
-	let card: Card;
+	let card: StatefulCard;
 	$: {
 		card = { 
 			suit: Suit.Clubs, 

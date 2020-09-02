@@ -1,5 +1,5 @@
 import { GameState, gameState, deck, playerOneHand } from "@/modules/Game/GameState";
-import { Card, Suits, Ranks, CardState } from "@/modules/Cards";
+import { StatefulCard, Suits, Ranks, CardState } from "@/modules/Cards";
 import { playSound } from "@/modules/Assets";
 import { waitFor } from "@/modules/Fetching";
 
@@ -37,7 +37,7 @@ async function startDealing() {
 
 async function dealAllCards() {
 	// Array to store drawn cards
-	let drawn: Card[];
+	let drawn: StatefulCard[];
 
 	// Draw 5 cards
 	deck.update(cards => {
@@ -93,7 +93,7 @@ function randomFromRange(min: number, max: number) : number {
 
 function resetDeck() {
 	// Create new array
-	const result: Card[] = [];
+	const result: StatefulCard[] = [];
 	const state = CardState.Default;
 
 	// Iterate over suits and ranks, adding to array
@@ -110,7 +110,7 @@ function resetDeck() {
 function shuffleDeck() {
 	deck.update(array => {
 		let currentIndex = array.length;
-		let temporaryValue: Card;
+		let temporaryValue: StatefulCard;
 		let randomIndex: number;
 		
 		while (currentIndex != 0) {

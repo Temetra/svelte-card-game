@@ -1,9 +1,9 @@
 import { playerOneHand } from "@/modules/Game/GameState";
-import type { Card } from "@/modules/Cards";
+import type { StatefulCard } from "@/modules/Cards";
 import { CardState } from "@/modules/Cards";
 import { playSound } from "@/modules/Assets";
 
-export function flipCard(target: Card) {
+export function flipCard(target: StatefulCard) {
 	// Audio feedback
 	playSound("card")
 	

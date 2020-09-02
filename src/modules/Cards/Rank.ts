@@ -14,4 +14,4 @@ export enum Rank {
 	King
 }
 
-export const Ranks: Rank[] = Object.keys(Rank).filter(x => !Number(x)).map(x => Rank[x]);
+export const Ranks: Rank[] = Object.keys(Rank).filter(x => Number.isNaN(Number(x))).map(x => Rank[x]);

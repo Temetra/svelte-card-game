@@ -1,5 +1,5 @@
 import { writable } from "svelte/store";
-import type { Card } from "@/modules/Cards";
+import type { StatefulCard } from "@/modules/Cards";
 
 export enum GameState {
 	Preparing,
@@ -11,5 +11,5 @@ export enum GameState {
 }
 
 export const gameState = writable<GameState>(GameState.Preparing);
-export const deck = writable<Card[]>([]);
-export const playerOneHand = writable<Card[]>([]);
+export const deck = writable<StatefulCard[]>([]);
+export const playerOneHand = writable<StatefulCard[]>([]);

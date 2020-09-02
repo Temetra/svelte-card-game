@@ -1,8 +1,8 @@
 <script lang="ts">
-	import type { Card } from "@/modules/Cards";
+	import type { StatefulCard } from "@/modules/Cards";
 	import { Suit, Rank, CardState, getCardName } from "@/modules/Cards";
 
-	export let card: Card = { suit: Suit.Joker, rank:Rank.Ace, state:CardState.Default };
+	export let card: StatefulCard = { suit: Suit.Joker, rank:Rank.Ace, state:CardState.Default };
 	export let index: number = 0;
 </script>
 

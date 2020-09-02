@@ -1,10 +1,10 @@
 <script lang="ts">
 	import { createEventDispatcher } from "svelte";
-	import type { Card } from "@/modules/Cards";
+	import type { StatefulCard } from "@/modules/Cards";
 	import { Suit, Rank, CardState, getCardName } from "@/modules/Cards";
 	import { getCardTexture, getCardFace, getCardBack } from "@/modules/Assets";
 
-	export let card: Card = { suit: Suit.Joker, rank:Rank.Ace, state:CardState.Default };
+	export let card: StatefulCard = { suit: Suit.Joker, rank:Rank.Ace, state:CardState.Default };
 
 	// Dispatch card click events
 	const dispatch = createEventDispatcher();

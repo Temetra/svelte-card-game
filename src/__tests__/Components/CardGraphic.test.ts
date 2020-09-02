@@ -1,13 +1,13 @@
 import "../Mocks/AudioContext";
 import "../Mocks/Fetch";
-import { Card, Suit, Rank, CardState } from "@/modules/Cards";
+import { StatefulCard, Suit, Rank, CardState } from "@/modules/Cards";
 import { prepareCardGraphics } from "@/modules/Assets";
-import CardGraphic from "@/Components/CardGraphic.svelte";
+import CardGraphic from "@/components/CardGraphic.svelte";
 
 test("CardGraphic", async () => {
 	// Setup
 	await prepareCardGraphics();
-	let card: Card = { suit: Suit.Hearts, rank:Rank.Queen, state:CardState.Default };
+	let card: StatefulCard = { suit: Suit.Hearts, rank:Rank.Queen, state:CardState.Default };
 
 	// Render component
 	let component = new CardGraphic({ target: document.body, props: { card } });

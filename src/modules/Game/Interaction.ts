@@ -2,22 +2,22 @@ import { GameState, gameState, playerOneHand } from "@/modules/Game/GameState";
 import { flipCard } from "@/modules/Game/FlipCard";
 import { focusCard } from "@/modules/Game/FocusCard";
 import { requestNewCards } from "@/modules/Game/RequestNewCards";
-import type { Card } from "@/modules/Cards";
+import type { StatefulCard } from "@/modules/Cards";
 
 let state: GameState;
 gameState.subscribe(x => state = x);
 
-let hand: Card[];
+let hand: StatefulCard[];
 playerOneHand.subscribe(x => hand = x);
 
 // Player clicked on card in hand
-export function handleCardClick(event: CustomEvent<Card>) {
+export function handleCardClick(event: CustomEvent<StatefulCard>) {
 	if (state == GameState.Selecting) {
 		flipCard(event.detail);
 	}
 }
 
-export function handleCardHover(event: CustomEvent<{target:Card, enter:boolean}>) {
+export function handleCardHover(event: CustomEvent<{target:StatefulCard, enter:boolean}>) {
 	if (state == GameState.Selecting) {
 		focusCard(event.detail);
 	}
