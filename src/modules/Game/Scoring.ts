@@ -14,7 +14,7 @@ export enum Combination {
 	RoyalFlush
 }
 
-interface BestCombination {
+export interface BestCombination {
 	combination: Combination;
 	cards: Card[]
 }

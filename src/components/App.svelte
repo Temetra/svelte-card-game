@@ -3,6 +3,7 @@
 	import { GameState, gameState, prepareGame } from "@/modules/Game";
 	import Controls from "@/components/Controls.svelte";
 	import PlayingArea from "@/components/PlayingArea.svelte";
+	import Score from "@/components/Score.svelte";
 	import Progress from "@/components/Progress.svelte";
 
 	onMount(async () => await prepareGame());
@@ -13,6 +14,7 @@
 		display: grid;
 		grid-template-areas:
 			"playing-area"
+			"score"
 			"controls";
 		grid-template-columns: 1fr;
 		grid-template-rows: 1fr auto;
@@ -24,7 +26,8 @@
 	{#if $gameState == GameState.Preparing}
 		<Progress />
 	{:else}
-		<Controls />
 		<PlayingArea />
+		<Score />
+		<Controls />
 	{/if}
 </section>

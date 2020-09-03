@@ -1,11 +1,16 @@
-import { GameState, gameState, deck, playerOneHand } from "@/modules/Game/GameState";
-import { StatefulCard, Suits, Ranks, CardState } from "@/modules/Cards";
+import { GameState, gameState, deck, playerOneHand, playerOneScore } from "@/modules/Game/GameState";
+import { getBestCombination } from "@/modules/Game/Scoring";
+import type { StatefulCard } from "@/modules/Cards";
+import { Suits, Ranks, CardState } from "@/modules/Cards";
 import { playSound } from "@/modules/Assets";
 import { waitFor } from "@/modules/Fetching";
 
 const avgDealDelay = 400;
 const dealDelayDeviation = 25;
 const audioDelay = 0;
+
+// Array to store drawn cards
+let drawn: StatefulCard[];
 
 // Sequence for dealing a hand from a freshly shuffled deck
 export function requestNewCards() {
@@ -28,6 +33,7 @@ async function startDealing() {
 
 	// Clear player hand
 	playerOneHand.set([]);
+	playerOneScore.set(null);
 
 	// Some sort of anim prep before dealing
 	await waitFor(500);
@@ -36,9 +42,6 @@ async function startDealing() {
 }
 
 async function dealAllCards() {
-	// Array to store drawn cards
-	let drawn: StatefulCard[];
-
 	// Draw 5 cards
 	deck.update(cards => {
 		drawn = cards.splice(0, 5);
@@ -48,7 +51,7 @@ async function dealAllCards() {
 	// Change state of cards
 	drawn.map(card => card.state = CardState.Hidden);
 
-	// Add card to hand
+	// Add cards to hand
 	playerOneHand.update(hand => {
 		hand.push(...drawn);
 		return hand;
@@ -82,7 +85,12 @@ async function finishDealing() {
 		hand.map(card => card.state = CardState.Default);
 		return hand;
 	});
-	
+
+	// Update score
+	let combo = getBestCombination(drawn);
+	playerOneScore.set(combo);
+	console.log(combo);
+
 	// Enable button
 	gameState.set(GameState.Selecting);
 }
