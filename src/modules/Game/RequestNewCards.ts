@@ -49,7 +49,7 @@ async function dealAllCards() {
 	});
 
 	// Change state of cards
-	drawn.map(card => card.state = CardState.Hidden);
+	drawn.map(card => card.state |= CardState.Hidden);
 
 	// Add cards to hand
 	playerOneHand.update(hand => {
@@ -67,7 +67,8 @@ async function animateDealtCard() {
 
 	// Find first hidden card in hand and change state
 	playerOneHand.update(hand => {
-		hand.find(x => x.state === CardState.Hidden).state = CardState.Dealing;
+		let card = hand.find(x => x.state & CardState.Hidden);
+		card.state = (card.state &= ~CardState.Hidden) | CardState.Dealing;
 		return hand;
 	});
 
@@ -82,7 +83,7 @@ async function finishDealing() {
 
 	// Change state of cards
 	playerOneHand.update(hand => {
-		hand.map(card => card.state = CardState.Default);
+		hand.map(card => card.state &= ~CardState.Dealing);
 		return hand;
 	});
 
@@ -102,12 +103,11 @@ function randomFromRange(min: number, max: number) : number {
 function resetDeck() {
 	// Create new array
 	const result: StatefulCard[] = [];
-	const state = CardState.Default;
 
 	// Iterate over suits and ranks, adding to array
 	for (const suit of Suits) {
 		for (const rank of Ranks) {
-			result.push({ suit, rank, state });
+			result.push({ suit, rank, state: 0 });
 		}
 	}
 

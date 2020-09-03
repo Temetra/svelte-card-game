@@ -7,14 +7,8 @@
 	$: disabled = $gameState != GameState.Ready && 
 		$gameState != GameState.Selecting;
 
-	let card: StatefulCard;
-	$: {
-		card = { 
-			suit: Suit.Clubs, 
-			rank: Rank.Ace, 
-			state: disabled ? CardState.Default : CardState.Spinning 
-		};
-	}
+	let card: StatefulCard = { suit: Suit.Clubs, rank: Rank.Ace, state: 0 };
+	$: card.state = disabled ? 0 : CardState.Spinning;
 </script>
 
 <style type="text/scss">

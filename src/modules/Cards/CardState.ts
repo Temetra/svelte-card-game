@@ -1,9 +1,7 @@
 export enum CardState {
-	Default,
-	Hidden,
-	Focused,
-	Flipped,
-	FlippedFocused,
-	Dealing,
-	Spinning,
+	Hidden = 1 << 0,
+	Focused = 1 << 1,
+	Flipped = 1 << 2,
+	Dealing = 1 << 3,
+	Spinning = 1 << 4,
 }

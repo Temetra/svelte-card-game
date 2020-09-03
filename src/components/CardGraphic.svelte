@@ -4,7 +4,7 @@
 	import { Suit, Rank, CardState, getCardName } from "@/modules/Cards";
 	import { getCardTexture, getCardFace, getCardBack } from "@/modules/Assets";
 
-	export let card: StatefulCard = { suit: Suit.Joker, rank:Rank.Ace, state:CardState.Default };
+	export let card: StatefulCard = { suit: Suit.Joker, rank:Rank.Ace, state:0 };
 
 	// Dispatch card click events
 	const dispatch = createEventDispatcher();
@@ -91,12 +91,11 @@
 </style>
 
 <section 
-	class:default={card.state === CardState.Default}
-	class:flipped={card.state === CardState.Flipped || card.state === CardState.FlippedFocused}
-	class:focused={card.state === CardState.Focused || card.state === CardState.FlippedFocused}
-	class:deal={card.state === CardState.Dealing} 
-	class:spin={card.state === CardState.Spinning}
-	class:hide={card.state === CardState.Hidden}
+	class:flipped={(card.state & CardState.Flipped) != 0}
+	class:focused={(card.state & CardState.Focused) != 0}
+	class:deal={(card.state & CardState.Dealing) != 0}
+	class:spin={(card.state & CardState.Spinning) != 0}
+	class:hide={(card.state & CardState.Hidden) != 0}
 	on:click={handleClick}
 	on:mouseover={handleEnter}
 	on:mouseout={handleExit}

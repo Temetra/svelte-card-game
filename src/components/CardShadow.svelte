@@ -2,7 +2,7 @@
 	import type { StatefulCard } from "@/modules/Cards";
 	import { Suit, Rank, CardState, getCardName } from "@/modules/Cards";
 
-	export let card: StatefulCard = { suit: Suit.Joker, rank:Rank.Ace, state:CardState.Default };
+	export let card: StatefulCard = { suit: Suit.Joker, rank:Rank.Ace, state:0 };
 	export let index: number = 0;
 </script>
 
@@ -63,12 +63,11 @@
 </style>
 
 <section 
-	class:default={card.state === CardState.Default}
-	class:flipped={card.state === CardState.Flipped || card.state === CardState.FlippedFocused}
-	class:focused={card.state === CardState.Focused || card.state === CardState.FlippedFocused}
-	class:deal={card.state === CardState.Dealing} 
-	class:spin={card.state === CardState.Spinning}
-	class:hide={card.state === CardState.Hidden}
+	class:flipped={(card.state & CardState.Flipped) != 0}
+	class:focused={(card.state & CardState.Focused) != 0}
+	class:deal={(card.state & CardState.Dealing) != 0}
+	class:spin={(card.state & CardState.Spinning) != 0}
+	class:hide={(card.state & CardState.Hidden) != 0}
 	class={`position${index+1}`}
 >
 </section>
