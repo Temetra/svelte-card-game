@@ -34,6 +34,8 @@ function updateProgress(progress: number, total: number) {
 
 // Finds and plays sound
 export function playSound(name: string) {
+	if (!sounds) return;
+
 	let buffer = sounds[name];
 
 	if (buffer) {
