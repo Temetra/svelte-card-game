@@ -49,6 +49,22 @@ test("One pair, but not jacks or better", () => {
 	expect(result.cards).toStrictEqual(null);
 });
 
+test("Jacks or better with jacks (2 cards)", () => {
+	let hand: Card[] = [
+		{ rank: Rank.Jack, suit: Suit.Clubs },
+		{ rank: Rank.Jack, suit: Suit.Diamonds },
+	];
+
+	let result = getBestCombination(hand);
+
+	expect(result.combination).toBe(Combination.JacksOrBetter);
+
+	expect(result.cards).toStrictEqual([
+		{ rank: Rank.Jack, suit: Suit.Clubs },
+		{ rank: Rank.Jack, suit: Suit.Diamonds },
+	]);
+});
+
 test("Jacks or better with jacks", () => {
 	let hand: Card[] = [
 		{ rank: Rank.Five, suit: Suit.Hearts },
@@ -155,6 +171,24 @@ test("Three of a kind", () => {
 		{ rank: Rank.Five, suit: Suit.Diamonds },
 		{ rank: Rank.Five, suit: Suit.Hearts },
 		{ rank: Rank.Three, suit: Suit.Spades },
+	];
+
+	let result = getBestCombination(hand);
+
+	expect(result.combination).toBe(Combination.ThreeOfAKind);
+
+	expect(result.cards).toStrictEqual([
+		{ rank: Rank.Five, suit: Suit.Clubs },
+		{ rank: Rank.Five, suit: Suit.Diamonds },
+		{ rank: Rank.Five, suit: Suit.Hearts },
+	]);
+});
+
+test("Three of a kind (3 cards)", () => {
+	let hand: Card[] = [
+		{ rank: Rank.Five, suit: Suit.Clubs },
+		{ rank: Rank.Five, suit: Suit.Diamonds },
+		{ rank: Rank.Five, suit: Suit.Hearts },
 	];
 
 	let result = getBestCombination(hand);
