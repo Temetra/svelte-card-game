@@ -9,7 +9,8 @@ export enum Rank {
 	Eight,
 	Nine,
 	Ten,
-	Jack,
+	// High ace = 11
+	Jack = 12,
 	Queen,
 	King
 }

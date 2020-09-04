@@ -82,12 +82,23 @@ function isStraight(hand: Card[]): BestCombination {
 	if (hand.length < 5) return;
 
 	// Get first card rank as number
-	let prev = hand[0].rank as number;
+	let prev = hand[0].rank;
 	
-	// Exit early if current card is not 1 higher than previous
 	for (let idx = 1; idx < hand.length; idx++) {
-		let curr = hand[idx].rank as number;
-		if (curr - prev != 1) return null;
+		// Get current rank
+		let curr = hand[idx].rank;
+		
+		// High aces
+		if (prev == Rank.Ace && curr == Rank.Ten) {
+			prev = 10;
+			curr = 11;
+		}
+		else if (curr - prev != 1) {
+			// Exit early if current card is not 1 higher than previous
+			return null;
+		}
+
+		// Store current rank
 		prev = curr;
 	}
 
