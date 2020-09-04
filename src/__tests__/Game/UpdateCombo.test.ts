@@ -47,11 +47,11 @@ test("Combo store auto-updating", () => {
 
 test("Combo score changing on card flip", () => {
 	let cards = [
-		{ rank:Rank.Five, suit:Suit.Clubs, state:0 },
-		{ rank:Rank.Five, suit:Suit.Diamonds, state:0 },
-		{ rank:Rank.Queen, suit:Suit.Hearts, state:0 },
-		{ rank:Rank.Queen, suit:Suit.Spades, state:0 },
-		{ rank:Rank.Seven, suit:Suit.Clubs, state:0 },
+		{ rank:Rank.Four, suit:Suit.Diamonds, state:0 },
+		{ rank:Rank.Jack, suit:Suit.Spades, state:0 },
+		{ rank:Rank.Two, suit:Suit.Diamonds, state:0 },
+		{ rank:Rank.Jack, suit:Suit.Diamonds, state:0 },
+		{ rank:Rank.King, suit:Suit.Clubs, state:0 },
 	];
 
 	// Set up
@@ -61,13 +61,14 @@ test("Combo score changing on card flip", () => {
 	// Change card
 	playerOneHand.update(x => {
 		x[0].state ^= CardState.Flipped;
+		x[2].state ^= CardState.Flipped;
 		return x;
 	});
 
-	// Score should be two queens
+	// Score should be two jacks
 	expect(score.combination).toStrictEqual(Combination.JacksOrBetter);
 	expect(score.cards).toMatchObject<Card[]>([
-		{ rank:Rank.Queen, suit:Suit.Hearts },
-		{ rank:Rank.Queen, suit:Suit.Spades },
+		{ rank:Rank.Jack, suit:Suit.Spades },
+		{ rank:Rank.Jack, suit:Suit.Diamonds },
 	]);
 });
