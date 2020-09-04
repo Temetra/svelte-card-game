@@ -21,10 +21,6 @@ function updateScoreWhenHandChanged([gameState, hand]: [GameState, StatefulCard[
 			// Copy filtered hand for checking next time
 			prevHand = [...filteredHand];
 
-			// Fill gaps with jokers
-			let filler = Array.from<Card>({length: 5 - filteredHand.length}).fill({ rank:Rank.Ace, suit:Suit.Joker });
-			filteredHand.push(...filler);
-
 			// Get score combination
 			let combo = getBestCombination(filteredHand);
 
