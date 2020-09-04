@@ -1,7 +1,7 @@
 import { GameState, gameState, playerOneHand, playerOneScore } from "@/modules/Game/GameState";
 import { BestCombination, Combination } from "@/modules/Game/Scoring";
 import { Suit, Rank, CardState, Card } from "@/modules/Cards";
-import "@/modules/Game/UpdateCombo";
+import "@/modules/Game/UpdateScore";
 
 let score: BestCombination;
 let scoreUnsub;
