@@ -16,7 +16,7 @@ test("Invalid", () => {
 
 	hand.pop();
 
-	expect(handIsValid(hand)).toBeFalsy();
+	expect(handIsValid(hand)).toBeTruthy();
 });
 
 test("Nothing", () => {
@@ -127,6 +127,27 @@ test("Two pairs", () => {
 	]);
 });
 
+test("Two pairs with a joker", () => {
+	let hand: Card[] = [
+		{ rank: Rank.Jack, suit: Suit.Clubs },
+		{ rank: Rank.Jack, suit: Suit.Diamonds },
+		{ rank: Rank.Five, suit: Suit.Hearts },
+		{ rank: Rank.Five, suit: Suit.Spades },
+		{ rank: Rank.Ace, suit: Suit.Joker },
+	];
+
+	let result = getBestCombination(hand);
+
+	expect(result.combination).toBe(Combination.TwoPairs);
+
+	expect(result.cards).toStrictEqual([
+		{ rank: Rank.Five, suit: Suit.Hearts },
+		{ rank: Rank.Five, suit: Suit.Spades },
+		{ rank: Rank.Jack, suit: Suit.Clubs },
+		{ rank: Rank.Jack, suit: Suit.Diamonds },
+	]);
+});
+
 test("Three of a kind", () => {
 	let hand: Card[] = [
 		{ rank: Rank.Five, suit: Suit.Clubs },
@@ -134,6 +155,46 @@ test("Three of a kind", () => {
 		{ rank: Rank.Five, suit: Suit.Diamonds },
 		{ rank: Rank.Five, suit: Suit.Hearts },
 		{ rank: Rank.Three, suit: Suit.Spades },
+	];
+
+	let result = getBestCombination(hand);
+
+	expect(result.combination).toBe(Combination.ThreeOfAKind);
+
+	expect(result.cards).toStrictEqual([
+		{ rank: Rank.Five, suit: Suit.Clubs },
+		{ rank: Rank.Five, suit: Suit.Diamonds },
+		{ rank: Rank.Five, suit: Suit.Hearts },
+	]);
+});
+
+test("Three of a kind with jokers", () => {
+	let hand: Card[] = [
+		{ rank: Rank.Five, suit: Suit.Clubs },
+		{ rank: Rank.Ace, suit: Suit.Joker },
+		{ rank: Rank.Five, suit: Suit.Diamonds },
+		{ rank: Rank.Five, suit: Suit.Hearts },
+		{ rank: Rank.Ace, suit: Suit.Joker },
+	];
+
+	let result = getBestCombination(hand);
+
+	expect(result.combination).toBe(Combination.ThreeOfAKind);
+
+	expect(result.cards).toStrictEqual([
+		{ rank: Rank.Five, suit: Suit.Clubs },
+		{ rank: Rank.Five, suit: Suit.Diamonds },
+		{ rank: Rank.Five, suit: Suit.Hearts },
+	]);
+});
+
+test("Three of a kind with 1 joker", () => {
+	let hand: Card[] = [
+		{ rank: Rank.Five, suit: Suit.Clubs },
+		{ rank: Rank.Ace, suit: Suit.Joker },
+		{ rank: Rank.Five, suit: Suit.Diamonds },
+		{ rank: Rank.Five, suit: Suit.Hearts },
+		{ rank: Rank.Ace, suit: Suit.Spades },
 	];
 
 	let result = getBestCombination(hand);
@@ -176,6 +237,27 @@ test("Four of a kind", () => {
 		{ rank: Rank.Five, suit: Suit.Hearts },
 		{ rank: Rank.Five, suit: Suit.Spades },
 		{ rank: Rank.Two, suit: Suit.Spades },
+	];
+
+	let result = getBestCombination(hand);
+
+	expect(result.combination).toBe(Combination.FourOfAKind);
+
+	expect(result.cards).toStrictEqual([
+		{ rank: Rank.Five, suit: Suit.Clubs },
+		{ rank: Rank.Five, suit: Suit.Diamonds },
+		{ rank: Rank.Five, suit: Suit.Hearts },
+		{ rank: Rank.Five, suit: Suit.Spades },
+	]);
+});
+
+test("Four of a kind with 1 joker", () => {
+	let hand: Card[] = [
+		{ rank: Rank.Five, suit: Suit.Clubs },
+		{ rank: Rank.Five, suit: Suit.Diamonds },
+		{ rank: Rank.Five, suit: Suit.Hearts },
+		{ rank: Rank.Five, suit: Suit.Spades },
+		{ rank: Rank.Ace, suit: Suit.Joker },
 	];
 
 	let result = getBestCombination(hand);

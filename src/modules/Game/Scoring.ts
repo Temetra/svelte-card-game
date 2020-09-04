@@ -1,6 +1,7 @@
 import type { Card } from "@/modules/Cards";
 import { Rank } from "@/modules/Cards";
 import { compareArrays } from "@/modules/Collections";
+import { Suit } from "../Cards/Suit";
 
 export enum Combination {
 	Nothing,
@@ -31,10 +32,12 @@ export function getBestCombination(input: Card[]): BestCombination {
 		cards: null 
 	};
 	
-	if (!handIsValid(input)) return nothing;
+	// Sort input hand by rank, removing jokers
+	let hand = input.filter(x => x.suit != Suit.Joker)
+		.sort((a, b) => a.rank - b.rank);
 
-	// Sort input hand by rank
-	let hand = [...input].sort((a, b) => a.rank - b.rank);
+	// Check hand
+	if (!handIsValid(hand)) return nothing;
 
 	// Group cards by rank to find pairs etc
 	let rankCounts = groupCardsByRank(hand);
@@ -59,13 +62,17 @@ export function getBestCombination(input: Card[]): BestCombination {
 }
 
 export function handIsValid(hand: Card[]) {
+	// Check for duplicate cards
 	let ids = hand.map(x => x.suit + x.rank);
 	let uniques = new Set(ids);
-	return uniques.size == hand.length && hand.length == 5;
+	return uniques.size == ids.length;
 }
 
 // Straight = any five cards of consecutive value, any suit
 function isStraight(hand: Card[]): BestCombination {
+	// Ensure hand is 5 cards
+	if (hand.length < 5) return;
+
 	// Get first card rank as number
 	let prev = hand[0].rank as number;
 	
@@ -85,6 +92,9 @@ function isStraight(hand: Card[]): BestCombination {
 
 // Flush = any five cards of the same suit, any order
 function isFlush(hand: Card[]): BestCombination {
+	// Ensure hand is 5 cards
+	if (hand.length < 5) return;
+
 	// Get suit of first card
 	let suit = hand[0].suit;
 
@@ -124,7 +134,7 @@ function isRoyalFlush(flush: BestCombination): BestCombination {
 
 // Four of a Kind = four cards of the same value
 function isFourOfAKind(rankCounts: CardsByRank[], rawCounts: number[]): BestCombination {
-	if (compareArrays(rawCounts, [4,1])) {
+	if (rawCounts[0] == 4) {
 		return {
 			combination: Combination.FourOfAKind,
 			cards: [...rankCounts[0].cards]
@@ -134,7 +144,7 @@ function isFourOfAKind(rankCounts: CardsByRank[], rawCounts: number[]): BestComb
 
 // Full House = a pair and a three of a kind
 function isFullHouse(hand: Card[], rawCounts: number[]): BestCombination {
-	if (compareArrays(rawCounts, [3,2])) {
+	if (rawCounts[0] == 3 && rawCounts[1] == 2) {
 		return {
 			combination: Combination.FullHouse,
 			cards: [...hand]
@@ -144,7 +154,7 @@ function isFullHouse(hand: Card[], rawCounts: number[]): BestCombination {
 
 // Three of a Kind = three cards same value
 function isThreeOfAKind(rankCounts: CardsByRank[], rawCounts: number[]): BestCombination {
-	if (compareArrays(rawCounts, [3,1,1])) {
+	if (rawCounts[0] == 3) {
 		return {
 			combination: Combination.ThreeOfAKind,
 			cards: [...rankCounts[0].cards]
@@ -154,7 +164,7 @@ function isThreeOfAKind(rankCounts: CardsByRank[], rawCounts: number[]): BestCom
 
 // Two Pair = a pair is two cards with same value, two pairs
 function isTwoPairs(rankCounts: CardsByRank[], rawCounts: number[]): BestCombination {
-	if (compareArrays(rawCounts, [2,2,1])) {
+	if (rawCounts[0] == 2 && rawCounts[1] == 2) {
 		return {
 			combination: Combination.TwoPairs,
 			cards: [...rankCounts[0].cards, ...rankCounts[1].cards]

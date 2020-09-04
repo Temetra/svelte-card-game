@@ -8,9 +8,11 @@ let scoreUnsub;
 
 beforeEach(() => {
 	if (scoreUnsub) scoreUnsub();
-	score = null;
+	scoreUnsub = null;
+	gameState.set(GameState.Preparing);
 	playerOneHand.set([]);
 	playerOneScore.set(null);
+	score = null;
 	scoreUnsub = playerOneScore.subscribe(x => score = x);
 });
 
