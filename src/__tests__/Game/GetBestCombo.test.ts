@@ -1,23 +1,6 @@
 import type { Card } from "@/modules/Cards";
 import { Suit, Rank } from "@/modules/Cards";
-import { Combination, handIsValid, getBestCombination } from "@/modules/Game/Scoring";
-export{}
-
-test("Invalid", () => {
-	let hand: Card[] = [
-		{ rank: Rank.Five, suit: Suit.Hearts },
-		{ rank: Rank.Eight, suit: Suit.Diamonds },
-		{ rank: Rank.Nine, suit: Suit.Spades },
-		{ rank: Rank.Jack, suit: Suit.Clubs },
-		{ rank: Rank.Jack, suit: Suit.Clubs }, // duplicate card
-	];
-
-	expect(handIsValid(hand)).toBeFalsy();
-
-	hand.pop();
-
-	expect(handIsValid(hand)).toBeTruthy();
-});
+import { Combination, getBestCombination } from "@/modules/Game/Scoring";
 
 test("Nothing", () => {
 	let hand: Card[] = [

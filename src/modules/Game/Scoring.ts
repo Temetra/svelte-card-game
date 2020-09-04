@@ -31,13 +31,13 @@ export function getBestCombination(input: Card[]): BestCombination {
 		combination: Combination.Nothing, 
 		cards: null 
 	};
+
+	// Check hand
+	if (!handIsValid(input)) return nothing;
 	
 	// Sort input hand by rank, removing jokers
 	let hand = input.filter(x => x.suit != Suit.Joker)
 		.sort((a, b) => a.rank - b.rank);
-
-	// Check hand
-	if (!handIsValid(hand)) return nothing;
 
 	// Group cards by rank to find pairs etc
 	let rankCounts = groupCardsByRank(hand);
@@ -62,10 +62,18 @@ export function getBestCombination(input: Card[]): BestCombination {
 }
 
 export function handIsValid(hand: Card[]) {
+	// Check array
+	if (hand == null) return false;
+
+	// Filter jokers, create array of card ids
+	let ids = hand.filter(x => x.suit != Suit.Joker)
+		.map(x => x.suit + x.rank);
+
 	// Check for duplicate cards
-	let ids = hand.map(x => x.suit + x.rank);
 	let uniques = new Set(ids);
-	return uniques.size == ids.length;
+
+	// Should have at least 2 cards
+	return uniques.size == ids.length && uniques.size >= 2;
 }
 
 // Straight = any five cards of consecutive value, any suit
