@@ -1,4 +1,4 @@
-import type { Card } from "@/modules/Cards";
+import { Card, getCardIndex } from "@/modules/Cards";
 import { Rank } from "@/modules/Cards";
 import { compareArrays } from "@/modules/Collections";
 import { Suit } from "../Cards/Suit";
@@ -67,7 +67,7 @@ export function handIsValid(hand: Card[]) {
 
 	// Filter jokers, create array of card ids
 	let ids = hand.filter(x => x.suit != Suit.Joker)
-		.map(x => x.suit + x.rank);
+		.map(x => getCardIndex(x));
 
 	// Check for duplicate cards
 	let uniques = new Set(ids);
