@@ -1,5 +1,4 @@
-import { GameState, gameState, deck, playerOneHand, playerOneScore } from "@/modules/Game/GameState";
-import { getBestCombination } from "@/modules/Game/Scoring";
+import { GameState, gameState, deck, playerOneHand } from "@/modules/Game/GameState";
 import type { StatefulCard } from "@/modules/Cards";
 import { Suits, Ranks, CardState } from "@/modules/Cards";
 import { playSound } from "@/modules/Assets";
@@ -33,7 +32,6 @@ async function startDealing() {
 
 	// Clear player hand
 	playerOneHand.set([]);
-	playerOneScore.set(null);
 
 	// Some sort of anim prep before dealing
 	await waitFor(500);
@@ -86,11 +84,6 @@ async function finishDealing() {
 		hand.map(card => card.state &= ~CardState.Dealing);
 		return hand;
 	});
-
-	// Update score
-	let combo = getBestCombination(drawn);
-	playerOneScore.set(combo);
-	console.log(combo);
 
 	// Enable button
 	gameState.set(GameState.Selecting);

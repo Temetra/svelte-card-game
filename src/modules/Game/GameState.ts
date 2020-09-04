@@ -1,4 +1,4 @@
-import { writable } from "svelte/store";
+import { writable, derived } from "svelte/store";
 import type { StatefulCard } from "@/modules/Cards";
 import type { BestCombination } from "@/modules/Game/Scoring";
 
@@ -16,3 +16,4 @@ export const gameState = writable<GameState>(GameState.Preparing);
 export const deck = writable<StatefulCard[]>([]);
 export const playerOneHand = writable<StatefulCard[]>([]);
 export const playerOneScore = writable<BestCombination>(null);
+export const gameStateAndHand = derived([gameState, playerOneHand], stores => stores);

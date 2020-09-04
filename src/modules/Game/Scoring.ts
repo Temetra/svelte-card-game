@@ -1,5 +1,6 @@
 import type { Card } from "@/modules/Cards";
 import { Rank } from "@/modules/Cards";
+import { compareArrays } from "@/modules/Collections";
 
 export enum Combination {
 	Nothing,
@@ -25,7 +26,10 @@ interface CardsByRank {
 }
 
 export function getBestCombination(input: Card[]): BestCombination {
-	let nothing: BestCombination = { combination: Combination.Nothing, cards: null };
+	let nothing: BestCombination = { 
+		combination: Combination.Nothing, 
+		cards: null 
+	};
 	
 	if (!handIsValid(input)) return nothing;
 
@@ -178,9 +182,4 @@ export function groupCardsByRank(arr: Card[]): CardsByRank[] {
 	}
 	
 	return result.sort((a, b) => b.cards.length - a.cards.length);
-}
-
-function compareArrays<T>(first: T[], second: T[]) {
-	return first.length == second.length 
-		&& first.every((value, index) => value === second[index]);
 }
