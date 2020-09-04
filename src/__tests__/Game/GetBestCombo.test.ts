@@ -122,6 +122,25 @@ test("Jacks or better with queens", () => {
 	]);
 });
 
+test("Jacks or better with aces", () => {
+	let hand: Card[] = [
+		{ rank: Rank.Ace, suit: Suit.Hearts },
+		{ rank: Rank.Ace, suit: Suit.Spades },
+		{ rank: Rank.Two, suit: Suit.Clubs },
+		{ rank: Rank.Three, suit: Suit.Spades },
+		{ rank: Rank.Four, suit: Suit.Diamonds },
+	];
+
+	let result = getBestCombination(hand);
+
+	expect(result.combination).toBe(Combination.JacksOrBetter);
+
+	expect(result.cards).toStrictEqual([
+		{ rank: Rank.Ace, suit: Suit.Hearts },
+		{ rank: Rank.Ace, suit: Suit.Spades },
+	]);
+});
+
 test("Two pairs", () => {
 	let hand: Card[] = [
 		{ rank: Rank.Jack, suit: Suit.Clubs },

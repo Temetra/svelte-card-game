@@ -172,9 +172,10 @@ function isTwoPairs(rankCounts: CardsByRank[], rawCounts: number[]): BestCombina
 	}
 }
 
-// Jacks or Better = a pair, restricted to Jacks or higher
+// Jacks or Better = a pair of high cards (A/J/Q/K)
 function isJacksOrBetter(rankCounts: CardsByRank[]): BestCombination {
-	if (rankCounts[0].cards.length == 2 && rankCounts[0].rank >= Rank.Jack) {
+	if (rankCounts[0].cards.length == 2 && 
+		(rankCounts[0].rank >= Rank.Jack || rankCounts[0].rank == Rank.Ace)) {
 		return {
 			combination: Combination.JacksOrBetter,
 			cards: [...rankCounts[0].cards]
