@@ -1,7 +1,6 @@
 import { GameState, gameStateAndHand, playerOneScore } from "@/modules/Game/GameState";
-import { getBestCombination } from "@/modules/Game/Scoring";
 import type { StatefulCard, Card } from "@/modules/Cards";
-import { CardState, Rank, Suit } from "@/modules/Cards";
+import { CardState, getBestCombination } from "@/modules/Cards";
 import { compareArrays } from "@/modules/Collections";
 
 // Copy of previous hand

@@ -1,6 +1,5 @@
 import type { Card } from "@/modules/Cards";
-import { Suit, Rank } from "@/modules/Cards";
-import { Combination, getBestCombination } from "@/modules/Game/Scoring";
+import { Suit, Rank, Combination, getBestCombination } from "@/modules/Cards";
 
 // Straight = any five cards of consecutive value, any suit
 test("Not a straight", () => {

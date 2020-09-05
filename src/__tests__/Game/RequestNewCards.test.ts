@@ -1,7 +1,5 @@
-import "../Mocks/AudioContext";
 import { GameState, gameState, playerOneHand, requestNewCards } from "@/modules/Game";
 import { CardState } from "@/modules/Cards";
-export{}
 
 let states: string[] = [];
 let unsubGameState;

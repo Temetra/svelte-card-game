@@ -1,7 +1,7 @@
-import { Card, getCardIndex } from "@/modules/Cards";
-import { Rank } from "@/modules/Cards";
+import { Card, getCardIndex } from "@/modules/Cards/Card";
+import { Rank } from "@/modules/Cards/Rank";
+import { Suit } from "@/modules/Cards/Suit";
 import { compareArrays } from "@/modules/Collections";
-import { Suit } from "../Cards/Suit";
 
 export enum Combination {
 	Nothing,
@@ -21,20 +21,16 @@ export interface BestCombination {
 	cards: Card[]
 }
 
-interface CardsByRank {
-	rank: Rank;
-	cards: Card[];
-}
+interface GroupedCards extends Array<Array<Card>> {}
 
 const fiveHigh = [Rank.Ace, Rank.Two, Rank.Three, Rank.Four, Rank.Five];
 const aceHigh = [Rank.Ace, Rank.Ten, Rank.Jack, Rank.Queen, Rank.King];
+const nothing: BestCombination = { 
+	combination: Combination.Nothing, 
+	cards: null 
+};
 
 export function getBestCombination(input: Card[]): BestCombination {
-	let nothing: BestCombination = { 
-		combination: Combination.Nothing, 
-		cards: null 
-	};
-
 	// Check hand
 	if (!handIsValid(input)) return nothing;
 	
@@ -42,26 +38,31 @@ export function getBestCombination(input: Card[]): BestCombination {
 	let hand = input.filter(x => x.suit != Suit.Joker)
 		.sort((a, b) => a.rank - b.rank);
 
-	// Group cards by rank to find pairs etc
-	let rankCounts = groupCardsByRank(hand);
-
-	// Just card counts to simplify array comparison
-	let rawCounts = rankCounts.map(x => x.cards.length);
-
 	// Straight and flush results are used for multiple combinations
 	let straight = isAcesStraight(hand) || isStraight(hand);
 	let flush = isFlush(hand);
 
-	return isRoyalFlush(straight, flush)
-		|| isStraightFlush(straight, flush)
-		|| isFourOfAKind(rankCounts, rawCounts)
-		|| isFullHouse(hand, rawCounts)
-		|| flush
-		|| straight
-		|| isThreeOfAKind(rankCounts, rawCounts)
-		|| isTwoPairs(rankCounts, rawCounts)
-		|| isJacksOrBetter(rankCounts)
-		|| nothing;
+	// Check royal/straight flush
+	let result = isRoyalFlush(straight, flush) || isStraightFlush(straight, flush);
+
+	// More data is needed
+	if (!result) {
+		// Group cards by rank to find pairs etc
+		let groupedCards = groupCardsByRank(hand);
+
+		// Check remaining combinations
+		result = isFourOfAKind(groupedCards)
+			|| isFullHouse(groupedCards)
+			|| flush
+			|| straight
+			|| isThreeOfAKind(groupedCards)
+			|| isTwoPairs(groupedCards)
+			|| isJacksOrBetter(groupedCards)
+			|| nothing;
+	}
+
+	// Finished
+	return result;
 }
 
 function handIsValid(hand: Card[]) {
@@ -156,67 +157,69 @@ function isRoyalFlush(straight: BestCombination, flush: BestCombination): BestCo
 }
 
 // Four of a Kind = four cards of the same value
-function isFourOfAKind(rankCounts: CardsByRank[], rawCounts: number[]): BestCombination {
-	if (rawCounts[0] == 4) {
+function isFourOfAKind(groupedCards: GroupedCards): BestCombination {
+	if (groupedCards[0].length == 4) {
 		return {
 			combination: Combination.FourOfAKind,
-			cards: [...rankCounts[0].cards]
+			cards: [...groupedCards[0]]
 		};
 	}
 }
 
 // Full House = a pair and a three of a kind
-function isFullHouse(hand: Card[], rawCounts: number[]): BestCombination {
-	if (rawCounts[0] == 3 && rawCounts[1] == 2) {
+function isFullHouse(groupedCards: GroupedCards): BestCombination {
+	if (groupedCards.length == 2 && groupedCards[0].length == 3 && groupedCards[1].length == 2) {
 		return {
 			combination: Combination.FullHouse,
-			cards: [...hand]
+			cards: [...groupedCards[0], ...groupedCards[1]]
 		};
 	}
 }
 
 // Three of a Kind = three cards same value
-function isThreeOfAKind(rankCounts: CardsByRank[], rawCounts: number[]): BestCombination {
-	if (rawCounts[0] == 3) {
+function isThreeOfAKind(groupedCards: GroupedCards): BestCombination {
+	if (groupedCards[0].length == 3) {
 		return {
 			combination: Combination.ThreeOfAKind,
-			cards: [...rankCounts[0].cards]
+			cards: [...groupedCards[0]]
 		};
 	}
 }
 
 // Two Pair = a pair is two cards with same value, two pairs
-function isTwoPairs(rankCounts: CardsByRank[], rawCounts: number[]): BestCombination {
-	if (rawCounts[0] == 2 && rawCounts[1] == 2) {
+function isTwoPairs(groupedCards: GroupedCards): BestCombination {
+	if (groupedCards.length >= 2 && groupedCards[0].length == 2 && groupedCards[1].length == 2) {
 		return {
 			combination: Combination.TwoPairs,
-			cards: [...rankCounts[0].cards, ...rankCounts[1].cards]
+			cards: [...groupedCards[0], ...groupedCards[1]]
 		};
 	}
 }
 
 // Jacks or Better = a pair of high cards (J/Q/K/A)
-function isJacksOrBetter(rankCounts: CardsByRank[]): BestCombination {
-	if (rankCounts[0].cards.length == 2 && 
-		(rankCounts[0].rank >= Rank.Jack || rankCounts[0].rank == Rank.Ace)) {
-		return {
-			combination: Combination.JacksOrBetter,
-			cards: [...rankCounts[0].cards]
-		};
-	}
+function isJacksOrBetter(groupedCards: GroupedCards): BestCombination {
+	if (groupedCards[0].length == 2) {
+		let firstCardRank = groupedCards[0][0].rank;
+		if (firstCardRank >= Rank.Jack || firstCardRank == Rank.Ace) {
+			return {
+				combination: Combination.JacksOrBetter,
+				cards: [...groupedCards[0]]
+			};
+		}
+	} 
 }
 
 // Groups cards by counting same ranks, sorted by most to least frequent
-function groupCardsByRank(arr: Card[]): CardsByRank[] {
-	let result: CardsByRank[] = [];
+function groupCardsByRank(hand: Card[]): GroupedCards {
+	let result: GroupedCards = [];
 	
-	for (let value of arr) {
-		let existing = result.find(x => x.rank == value.rank);
-		if (existing) existing.cards.push(value);
-		else result.push({ rank:value.rank, cards:[value] });
+	for (let card of hand) {
+		let existing = result.find(x => x[0].rank == card.rank);
+		if (existing) existing.push(card);
+		else result.push([card]);
 	}
 	
-	return result.sort((a, b) => b.cards.length - a.cards.length);
+	return result.sort((a, b) => b.length - a.length);
 }
 
 export const scoringInternal = {

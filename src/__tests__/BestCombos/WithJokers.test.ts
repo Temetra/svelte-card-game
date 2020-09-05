@@ -1,6 +1,5 @@
 import type { Card } from "@/modules/Cards";
-import { Suit, Rank } from "@/modules/Cards";
-import { Combination, getBestCombination } from "@/modules/Game/Scoring";
+import { Suit, Rank, Combination, getBestCombination } from "@/modules/Cards";
 
 test("Jacks or better with jacks and jokers", () => {
 	let hand: Card[] = [

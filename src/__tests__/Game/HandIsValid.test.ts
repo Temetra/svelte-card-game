@@ -1,6 +1,5 @@
 import type { Card } from "@/modules/Cards";
-import { Suit, Rank } from "@/modules/Cards";
-import { scoringInternal as scoring } from "@/modules/Game/Scoring";
+import { Suit, Rank, scoringInternal as scoring } from "@/modules/Cards";
 
 test("Invalid hand, duplicate card", () => {
 	let hand: Card[] = [

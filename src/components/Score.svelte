@@ -1,5 +1,6 @@
 <script lang="ts">
-	import { GameState, gameState, Combination, playerOneScore } from "@/modules/Game";
+	import { GameState, gameState, playerOneScore } from "@/modules/Game";
+	import { Combination } from "@/modules/Cards";
 	$: showScore = $playerOneScore && (
 		$gameState == GameState.Selecting || 
 		$gameState == GameState.Finished

@@ -1,6 +1,4 @@
-import { Ranks, Rank } from "@/modules/Cards/Rank";
-import { Suits, Suit } from "@/modules/Cards/Suit";
-import { getCardIndex } from "@/modules/Cards/Card";
+import { Ranks, Rank, Suits, Suit, getCardIndex } from "@/modules/Cards";
 
 test("Unique indices for cards", () => {
 	let indices = Suits.map(suit => {

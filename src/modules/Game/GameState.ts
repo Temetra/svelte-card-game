@@ -1,7 +1,5 @@
 import { writable, derived } from "svelte/store";
-import type { StatefulCard } from "@/modules/Cards";
-import type { BestCombination } from "@/modules/Game/Scoring";
-
+import type { StatefulCard, BestCombination } from "@/modules/Cards";
 
 export enum GameState {
 	Preparing,
