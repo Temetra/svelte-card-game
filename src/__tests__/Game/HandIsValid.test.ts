@@ -1,6 +1,6 @@
 import type { Card } from "@/modules/Cards";
 import { Suit, Rank } from "@/modules/Cards";
-import { handIsValid } from "@/modules/Game/Scoring";
+import { scoringInternal as scoring } from "@/modules/Game/Scoring";
 
 test("Invalid hand, duplicate card", () => {
 	let hand: Card[] = [
@@ -11,7 +11,7 @@ test("Invalid hand, duplicate card", () => {
 		{ rank: Rank.Jack, suit: Suit.Clubs }, // duplicate card
 	];
 
-	expect(handIsValid(hand)).toBeFalsy();
+	expect(scoring.handIsValid(hand)).toBeFalsy();
 });
 
 test("Valid hand, 4 cards", () => {
@@ -22,7 +22,7 @@ test("Valid hand, 4 cards", () => {
 		{ rank: Rank.Jack, suit: Suit.Clubs },
 	];
 
-	expect(handIsValid(hand)).toBeTruthy();
+	expect(scoring.handIsValid(hand)).toBeTruthy();
 });
 
 test("Invalid hand, 1 card", () => {
@@ -30,5 +30,5 @@ test("Invalid hand, 1 card", () => {
 		{ rank: Rank.Five, suit: Suit.Hearts },
 	];
 
-	expect(handIsValid(hand)).toBeFalsy();
+	expect(scoring.handIsValid(hand)).toBeFalsy();
 });

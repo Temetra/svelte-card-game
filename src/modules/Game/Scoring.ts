@@ -64,7 +64,7 @@ export function getBestCombination(input: Card[]): BestCombination {
 		|| nothing;
 }
 
-export function handIsValid(hand: Card[]) {
+function handIsValid(hand: Card[]) {
 	// Check array
 	if (hand == null) return false;
 
@@ -195,7 +195,7 @@ function isTwoPairs(rankCounts: CardsByRank[], rawCounts: number[]): BestCombina
 	}
 }
 
-// Jacks or Better = a pair of high cards (A/J/Q/K)
+// Jacks or Better = a pair of high cards (J/Q/K/A)
 function isJacksOrBetter(rankCounts: CardsByRank[]): BestCombination {
 	if (rankCounts[0].cards.length == 2 && 
 		(rankCounts[0].rank >= Rank.Jack || rankCounts[0].rank == Rank.Ace)) {
@@ -206,7 +206,8 @@ function isJacksOrBetter(rankCounts: CardsByRank[]): BestCombination {
 	}
 }
 
-export function groupCardsByRank(arr: Card[]): CardsByRank[] {
+// Groups cards by counting same ranks, sorted by most to least frequent
+function groupCardsByRank(arr: Card[]): CardsByRank[] {
 	let result: CardsByRank[] = [];
 	
 	for (let value of arr) {
@@ -217,3 +218,18 @@ export function groupCardsByRank(arr: Card[]): CardsByRank[] {
 	
 	return result.sort((a, b) => b.cards.length - a.cards.length);
 }
+
+export const scoringInternal = {
+	handIsValid, 
+	isAcesStraight, 
+	isStraight, 
+	isFlush, 
+	isStraightFlush, 
+	isRoyalFlush, 
+	isFourOfAKind, 
+	isFullHouse, 
+	isThreeOfAKind, 
+	isTwoPairs,
+	isJacksOrBetter,
+	groupCardsByRank
+};

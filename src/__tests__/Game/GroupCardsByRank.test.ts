@@ -1,6 +1,6 @@
 import type { Card } from "@/modules/Cards";
 import { Suit, Rank } from "@/modules/Cards";
-import { groupCardsByRank } from "@/modules/Game/Scoring";
+import { scoringInternal as scoring } from "@/modules/Game/Scoring";
 export{}
 
 test("One of each", () => {
@@ -12,7 +12,7 @@ test("One of each", () => {
 		{ rank: Rank.Five, suit: Suit.Clubs },
 	];
 	
-	let result = groupCardsByRank(hand);
+	let result = scoring.groupCardsByRank(hand);
 
 	expect(result.map(x => x.cards.length)).toStrictEqual([1,1,1,1,1]);
 });
@@ -26,7 +26,7 @@ test("One pair", () => {
 		{ rank: Rank.Five, suit: Suit.Clubs },
 	];
 	
-	let result = groupCardsByRank(hand);
+	let result = scoring.groupCardsByRank(hand);
 
 	expect(result.map(x => x.cards.length)).toStrictEqual([2,1,1,1]);
 });
@@ -40,7 +40,7 @@ test("Two pairs", () => {
 		{ rank: Rank.Five, suit: Suit.Clubs },
 	];
 	
-	let result = groupCardsByRank(hand);
+	let result = scoring.groupCardsByRank(hand);
 
 	expect(result.map(x => x.cards.length)).toStrictEqual([2,2,1]);
 });
@@ -54,7 +54,7 @@ test("Three of a kind", () => {
 		{ rank: Rank.Five, suit: Suit.Clubs },
 	];
 	
-	let result = groupCardsByRank(hand);
+	let result = scoring.groupCardsByRank(hand);
 
 	expect(result.map(x => x.cards.length)).toStrictEqual([3,1,1]);
 });
@@ -68,7 +68,7 @@ test("Four of a kind", () => {
 		{ rank: Rank.Five, suit: Suit.Clubs },
 	];
 	
-	let result = groupCardsByRank(hand);
+	let result = scoring.groupCardsByRank(hand);
 
 	expect(result.map(x => x.cards.length)).toStrictEqual([4,1]);
 });
@@ -82,7 +82,7 @@ test("Three of a kind and one pair", () => {
 		{ rank: Rank.Five, suit: Suit.Clubs },
 	];
 	
-	let result = groupCardsByRank(hand);
+	let result = scoring.groupCardsByRank(hand);
 
 	expect(result.map(x => x.cards.length)).toStrictEqual([3,2]);
 });
