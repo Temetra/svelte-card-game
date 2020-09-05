@@ -26,6 +26,9 @@ interface CardsByRank {
 	cards: Card[];
 }
 
+const fiveHigh = [Rank.Ace, Rank.Two, Rank.Three, Rank.Four, Rank.Five];
+const aceHigh = [Rank.Ace, Rank.Ten, Rank.Jack, Rank.Queen, Rank.King];
+
 export function getBestCombination(input: Card[]): BestCombination {
 	let nothing: BestCombination = { 
 		combination: Combination.Nothing, 
@@ -46,10 +49,10 @@ export function getBestCombination(input: Card[]): BestCombination {
 	let rawCounts = rankCounts.map(x => x.cards.length);
 
 	// Straight and flush results are used for multiple combinations
-	let straight = isStraight(hand);
+	let straight = isAcesStraight(hand) || isStraight(hand);
 	let flush = isFlush(hand);
 
-	return isRoyalFlush(flush)
+	return isRoyalFlush(straight, flush)
 		|| isStraightFlush(straight, flush)
 		|| isFourOfAKind(rankCounts, rawCounts)
 		|| isFullHouse(hand, rawCounts)
@@ -76,30 +79,36 @@ export function handIsValid(hand: Card[]) {
 	return uniques.size == ids.length && uniques.size >= 2;
 }
 
+// Straight = five-high or aces-high
+function isAcesStraight(hand: Card[]): BestCombination {
+	// Ensure hand is 5 cards
+	if (hand.length < 5) return;
+
+	// Get ranks for valid hands
+	const handRanks = hand.map(x => x.rank);
+
+	// Check hand
+	if (compareArrays(handRanks, fiveHigh) || compareArrays(handRanks, aceHigh)) {
+		return {
+			combination: Combination.Straight,
+			cards: [...hand]
+		};
+	}
+}
+
 // Straight = any five cards of consecutive value, any suit
 function isStraight(hand: Card[]): BestCombination {
 	// Ensure hand is 5 cards
 	if (hand.length < 5) return;
 
-	// Get first card rank as number
-	let prev = hand[0].rank;
-	
+	// Compare to previous card rank
 	for (let idx = 1; idx < hand.length; idx++) {
 		// Get current rank
+		let prev = hand[idx - 1].rank;
 		let curr = hand[idx].rank;
 		
-		// High aces
-		if (prev == Rank.Ace && curr == Rank.Ten) {
-			prev = 10;
-			curr = 11;
-		}
-		else if (curr - prev != 1) {
-			// Exit early if current card is not 1 higher than previous
-			return null;
-		}
-
-		// Store current rank
-		prev = curr;
+		// Exit early if current card is not 1 higher than previous
+		if (curr - prev != 1) return null;
 	}
 
 	// Success
@@ -137,17 +146,12 @@ function isStraightFlush(straight: BestCombination, flush: BestCombination): Bes
 }
 
 // Royal Flush = Ten, a Jack, a Queen, a King, and an Ace of the same suit
-const royalFlushTarget = [Rank.Ace, Rank.Ten, Rank.Jack, Rank.Queen, Rank.King];
-function isRoyalFlush(flush: BestCombination): BestCombination {
-	if (flush) {
-		let match = compareArrays(flush.cards.map(x => x.rank), royalFlushTarget);
-		
-		if (match) {
-			return {
-				combination: Combination.RoyalFlush,
-				cards: flush.cards
-			};
-		}
+function isRoyalFlush(straight: BestCombination, flush: BestCombination): BestCombination {
+	if (straight && flush && straight.cards[4].rank == Rank.King) {
+		return {
+			combination: Combination.RoyalFlush,
+			cards: straight.cards
+		};
 	}
 }
 
