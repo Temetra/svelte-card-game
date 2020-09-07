@@ -1,4 +1,4 @@
-import { GameState, gameState, playerOneHand, requestNewCards } from "@/modules/Game";
+import { GameState, gameState, playerOneHand, requestNewCards, discardAndDraw } from "@/modules/Game";
 import { CardState } from "@/modules/Cards";
 
 let states: string[] = [];
@@ -24,6 +24,24 @@ test("requestNewCards", async () => {
 	expect(hands).toStrictEqual([[]]);
 	
 	await requestNewCards();
+	
+	expect(states).toMatchSnapshot();
+	expect(hands).toMatchSnapshot();
+});
+
+test("DiscardAndDraw", async () => {
+	expect(states).toStrictEqual(["Preparing"]);
+	expect(hands).toStrictEqual([[]]);
+	
+	await requestNewCards();
+
+	playerOneHand.update(hand => {
+		hand[0].state = CardState.Flipped;
+		hand[3].state = CardState.Flipped;
+		return hand;
+	});
+
+	await discardAndDraw();
 	
 	expect(states).toMatchSnapshot();
 	expect(hands).toMatchSnapshot();

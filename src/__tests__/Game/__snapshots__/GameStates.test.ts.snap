@@ -1,5 +1,107 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`DiscardAndDraw 1`] = `
+Array [
+  "Preparing",
+  "Dealing",
+  "Selection",
+  "Discard",
+  "Drawing",
+  "Summary",
+]
+`;
+
+exports[`DiscardAndDraw 2`] = `
+Array [
+  Array [],
+  Array [],
+  Array [
+    "Hidden",
+    "Hidden",
+    "Hidden",
+    "Hidden",
+    "Hidden",
+  ],
+  Array [
+    "Dealing",
+    "Hidden",
+    "Hidden",
+    "Hidden",
+    "Hidden",
+  ],
+  Array [
+    "Dealing",
+    "Dealing",
+    "Hidden",
+    "Hidden",
+    "Hidden",
+  ],
+  Array [
+    "Dealing",
+    "Dealing",
+    "Dealing",
+    "Hidden",
+    "Hidden",
+  ],
+  Array [
+    "Dealing",
+    "Dealing",
+    "Dealing",
+    "Dealing",
+    "Hidden",
+  ],
+  Array [
+    "Dealing",
+    "Dealing",
+    "Dealing",
+    "Dealing",
+    "Dealing",
+  ],
+  Array [
+    undefined,
+    undefined,
+    undefined,
+    undefined,
+    undefined,
+  ],
+  Array [
+    "Flipped",
+    undefined,
+    undefined,
+    "Flipped",
+    undefined,
+  ],
+  Array [
+    "Discarding",
+    undefined,
+    undefined,
+    "Discarding",
+    undefined,
+  ],
+  Array [
+    "Dealing",
+    undefined,
+    undefined,
+    "Discarding",
+    undefined,
+  ],
+  Array [
+    "Dealing",
+    undefined,
+    undefined,
+    "Dealing",
+    undefined,
+  ],
+  Array [
+    undefined,
+    undefined,
+    undefined,
+    undefined,
+    undefined,
+  ],
+]
+`;
+
 exports[`requestNewCards 1`] = `
 Array [
   "Preparing",
