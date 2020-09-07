@@ -13,7 +13,6 @@ export enum GameState {
 }
 
 export const gameState = writable<GameState>(GameState.Preparing);
-export const deck = writable<StatefulCard[]>([]);
 export const playerOneHand = writable<StatefulCard[]>([]);
 export const playerOneScore = writable<BestCombination>(null);
 export const gameStateAndHand = derived([gameState, playerOneHand], stores => stores);

@@ -1,4 +1,5 @@
-import { GameState, gameState, deck, playerOneHand } from "@/modules/Game/GameState";
+import { GameState, gameState, playerOneHand } from "@/modules/Game/GameState";
+import { drawFromDeck } from "@/modules/Game/Deck";
 import type { StatefulCard } from "@/modules/Cards";
 import { CardState } from "@/modules/Cards";
 import { playSound } from "@/modules/Assets";
@@ -58,11 +59,8 @@ async function replaceCard(card: StatefulCard) {
 	await waitFor(randomFromRange(timing.delayFrom, timing.delayTo));
 
 	// Draw a card
-	deck.update(cards => {
-		drawn = cards.shift();
-		drawn.state = CardState.Dealing;
-		return cards;
-	});
+	drawn = drawFromDeck(1)[0];
+	drawn.state = CardState.Dealing;
 
 	// Update hand
 	playerOneHand.update(hand => {

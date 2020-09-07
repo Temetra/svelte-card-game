@@ -1,6 +1,7 @@
-import { GameState, gameState, deck, playerOneHand } from "@/modules/Game/GameState";
+import { GameState, gameState, playerOneHand } from "@/modules/Game/GameState";
+import { resetDeck, shuffleDeck, drawFromDeck } from "@/modules/Game/Deck";
 import type { StatefulCard } from "@/modules/Cards";
-import { Suits, Ranks, CardState } from "@/modules/Cards";
+import { CardState } from "@/modules/Cards";
 import { playSound } from "@/modules/Assets";
 import { waitFor } from "@/modules/Fetching";
 import { randomFromRange } from "@/modules/Rnd";
@@ -40,10 +41,7 @@ async function startDealing() {
 
 async function dealAllCards() {
 	// Draw 5 cards
-	deck.update(cards => {
-		drawn = cards.splice(0, 5);
-		return cards;
-	});
+	drawn = drawFromDeck(5);
 
 	// Change state of cards
 	drawn.map(card => card.state |= CardState.Hidden);
@@ -83,37 +81,4 @@ async function finishDealing() {
 
 	// Enable button
 	gameState.set(GameState.Selection);
-}
-
-function resetDeck() {
-	// Create new array
-	const result: StatefulCard[] = [];
-
-	// Iterate over suits and ranks, adding to array
-	for (const suit of Suits) {
-		for (const rank of Ranks) {
-			result.push({ suit, rank, state: 0 });
-		}
-	}
-
-	// Set deck store to array
-	deck.set(result);
-}
-
-function shuffleDeck() {
-	deck.update(array => {
-		let currentIndex = array.length;
-		let temporaryValue: StatefulCard;
-		let randomIndex: number;
-		
-		while (currentIndex != 0) {
-			randomIndex = Math.floor(Math.random() * currentIndex);
-			currentIndex -= 1;
-			temporaryValue = array[currentIndex];
-			array[currentIndex] = array[randomIndex];
-			array[randomIndex] = temporaryValue;
-		}
-		
-		return array;
-	});
 }
