@@ -2,7 +2,7 @@
 	import { createEventDispatcher } from "svelte";
 	import type { StatefulCard } from "@/modules/Cards";
 	import { Suit, Rank, CardState, getCardName } from "@/modules/Cards";
-	import { getCardTexture, getCardFace, getCardBack } from "@/modules/Assets";
+	import { getCardImage, getCardFace } from "@/modules/Assets";
 
 	export let card: StatefulCard = { suit: Suit.Joker, rank:Rank.Ace, state:0 };
 
@@ -100,7 +100,7 @@
 	on:mouseover={handleEnter}
 	on:mouseout={handleExit}
 >
-	<img src={getCardTexture()} class="texture" alt="" />
+	<img src={getCardImage("CardTexture")} class="texture" alt="" />
 	<img src={getCardFace(card)} class="face" alt={getCardName(card.suit, card.rank)} />
-	<img src={getCardBack()} class="back" alt="" />
+	<img src={getCardImage("CardBackgroundRed")} class="back" alt="" />
 </section>

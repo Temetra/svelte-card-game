@@ -13,6 +13,7 @@ export function prepareCardGraphics() {
 		"CardTexture": "images/cards/CardTexture.svg",
 		"CardBackgroundRed": "images/cards/CardBackgroundRed.svg",
 		"CardBackgroundBlue": "images/cards/CardBackgroundBlue.svg",
+		"CardShadow": "images/cards/CardShadow.png",
 		"Joker": "images/cards/Joker.svg"
 	};
 	
@@ -45,18 +46,13 @@ function updateProgress(progress: number, total: number) {
 	loadingStatus.set({ name:"images", progress, total });
 }
 
-// Returns base64 image blob for card texture
-export function getCardTexture() : string {
-	return images["CardTexture"] || "";
-}
-
-// Returns blob for card back
-export function getCardBack() : string {
-	return images["CardBackgroundRed"] || "";
+// Returns base64 image blob
+export function getCardImage(name: string): string {
+	return images[name] || "";
 }
 
 // Returns blob for card face value
-export function getCardFace(card: Card) : string {
+export function getCardFace(card: Card): string {
 	switch (card.suit) {
 		case Suit.Joker: return images["Joker"] || "";
 		default: return images[`${Suit[card.suit]}${Rank[card.rank]}`] || "";
