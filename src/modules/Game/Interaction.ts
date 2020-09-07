@@ -2,6 +2,8 @@ import { GameState, gameState, playerOneHand } from "@/modules/Game/GameState";
 import { flipCard } from "@/modules/Game/FlipCard";
 import { focusCard } from "@/modules/Game/FocusCard";
 import { requestNewCards } from "@/modules/Game/RequestNewCards";
+import { discardAndDraw } from "@/modules/Game/DiscardAndDraw";
+import { finishHand } from "@/modules/Game/FinishHand";
 import type { StatefulCard } from "@/modules/Cards";
 
 let state: GameState;
@@ -44,8 +46,14 @@ export function handleKeyboardInput(event: KeyboardEvent) {
 	if (event.code == "Space") {
 		switch (state) {
 			case GameState.Ready: 
-			case GameState.Selection: 
 				requestNewCards();
+				break;
+			case GameState.Discard: 
+				discardAndDraw();
+				break;
+			case GameState.Selection: 
+			case GameState.Summary: 
+				finishHand();
 				break;
 			default:
 				break;
