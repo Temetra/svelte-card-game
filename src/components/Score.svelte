@@ -19,6 +19,7 @@
 <section>
 	{#if showScore && $playerOneScore}
 		{Combination[$playerOneScore.combination]}
+	{:else}
+		This is the score
 	{/if}
-	This is the score
 </section>
