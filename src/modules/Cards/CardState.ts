@@ -4,4 +4,5 @@ export enum CardState {
 	Flipped = 1 << 2,
 	Dealing = 1 << 3,
 	Spinning = 1 << 4,
+	Discarding = 1 << 5,
 }

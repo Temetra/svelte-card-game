@@ -46,6 +46,10 @@
 		&.flipped.focused {
 			transform: scale3d(1.5,1.75,1) translateX(0) translateY(0px) translateZ(0px) rotateX(0deg) rotateY(180deg);
 		}
+
+		&.discard {
+			animation: discard-card 400ms forwards;
+		}
 	}
 
 	@keyframes deal-card {
@@ -57,6 +61,16 @@
 			transform: scale3d(1.15,1.15,1) translateY(0px) translateZ(0px) rotateX(0deg) rotateY(0deg);
 		}
 	}
+
+	@keyframes discard-card {
+		from {
+			transform: scale3d(1.15,1.15,1) translateX(0px) translateY(0px) translateZ(0px) rotateX(0deg) rotateY(180deg);
+		}
+		to {
+			opacity: 0;
+			transform: scale3d(1.15,1.15,1) translateX(0px) translateY(-100px) translateZ(0px) rotateX(0deg) rotateY(180deg);
+		}
+	}
 </style>
 
 <section 
@@ -65,6 +79,7 @@
 	class:deal={(card.state & CardState.Dealing) != 0}
 	class:spin={(card.state & CardState.Spinning) != 0}
 	class:hide={(card.state & CardState.Hidden) != 0}
+	class:discard={(card.state & CardState.Discarding) != 0}
 	class={`position${index+1}`}
 >
 	<img src={getCardImage("CardShadow")} alt="" />

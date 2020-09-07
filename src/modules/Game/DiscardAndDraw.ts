@@ -3,18 +3,22 @@ import type { StatefulCard } from "@/modules/Cards";
 import { CardState } from "@/modules/Cards";
 import { playSound } from "@/modules/Assets";
 import { waitFor } from "@/modules/Fetching";
+import { randomFromRange } from "@/modules/Rnd";
+import * as timing from "@/modules/Game/DealTiming";
+
+let discarding: StatefulCard[];
 
 export function discardAndDraw() {
 	return startDiscarding()
-		.then(replaceCard)
-		.then(replaceCard)
-		.then(replaceCard)
-		.then(replaceCard)
-		.then(replaceCard)
+		.then(discardCards)
+		.then(dealCards)
 		.then(finishDiscarding);
 }
 
 async function startDiscarding() {
+	// Reset array
+	discarding = [];
+
 	// Disable button
 	gameState.set(GameState.Drawing);
 
@@ -25,39 +29,60 @@ async function startDiscarding() {
 	await waitFor(500);
 }
 
-async function replaceCard() {
-	let card: StatefulCard;
-	let drawn: StatefulCard;
-	
+async function discardCards() {
 	playerOneHand.update(hand => {
-		card = hand.find(x => (x.state & CardState.Flipped) != 0);
-		if (card) card.state = (card.state &= ~CardState.Flipped) | CardState.Hidden;
+		discarding = hand.filter(x => (x.state & CardState.Flipped) != 0);
+		discarding.forEach(x => x.state = (x.state &= ~CardState.Flipped) | CardState.Discarding);
 		return hand;
 	});
 
-	if (card) {
-		// Some sort of anim prep before dealing
-		await waitFor(250);
-
-		// Draw a card
-		deck.update(cards => {
-			drawn = cards.shift();
-			return cards;
-		});
-
-		// Update hand
-		playerOneHand.update(hand => {
-			drawn.state = CardState.Dealing;
-			let idx = hand.indexOf(card);
-			hand[idx] = drawn;
-			return hand;
-		});
-
-		// Some sort of anim prep before dealing
-		await waitFor(250);
+	if (discarding) {
+		// Audio feedback
+		playSound("slide");
 	}
 }
 
+async function dealCards() {
+	for (let card of discarding) {
+		await replaceCard(card);
+	}
+}
+
+async function replaceCard(card: StatefulCard) {
+	let drawn: StatefulCard;
+
+	// Delay before dealing
+	await waitFor(randomFromRange(timing.delayFrom, timing.delayTo));
+
+	// Draw a card
+	deck.update(cards => {
+		drawn = cards.shift();
+		drawn.state = CardState.Dealing;
+		return cards;
+	});
+
+	// Update hand
+	playerOneHand.update(hand => {
+		let idx = hand.indexOf(card);
+		hand[idx] = drawn;
+		return hand;
+	});
+
+	// Audio feedback
+	await waitFor(timing.audioDelay);
+	playSound("card");
+}
+
 async function finishDiscarding() {
+	// Wait for last card to finish animating
+	await waitFor(timing.delayFinal);
+
+	// Change state of cards
+	playerOneHand.update(hand => {
+		hand.map(card => card.state &= ~CardState.Dealing);
+		return hand;
+	});
+
+	// Enable button
 	gameState.set(GameState.Summary);
 }

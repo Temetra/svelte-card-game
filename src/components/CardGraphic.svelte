@@ -65,6 +65,22 @@
 		&.flipped.focused {
 			transform: scale3d(1.25,1.25,1) translateY(50px) translateZ(100px) rotateX(-30deg) rotateY(180deg);
 		}
+
+		&.discard {
+			img {
+				backface-visibility: visible;
+
+				&.face {
+					opacity: 0;
+				}
+
+				&.back {
+					transform: rotateY(0deg);
+				}
+			}
+
+			animation: discard-card 400ms forwards;
+		}
 	}
 
 	@keyframes spin-card {
@@ -88,6 +104,16 @@
 			transform: scale3d(1,1,1) translateY(0px) translateZ(0px) rotateX(0deg) rotateY(0deg);
 		}
 	}
+
+	@keyframes discard-card {
+		from {
+			transform: scale3d(1,1,1) translateY(0px) translateZ(0px) rotateX(0deg) rotateY(180deg);
+		}
+		to {
+			opacity: 0;
+			transform: scale3d(1,1,1) translateY(-100px) translateZ(0px) rotateX(0deg) rotateY(180deg);
+		}
+	}
 </style>
 
 <section 
@@ -96,6 +122,7 @@
 	class:deal={(card.state & CardState.Dealing) != 0}
 	class:spin={(card.state & CardState.Spinning) != 0}
 	class:hide={(card.state & CardState.Hidden) != 0}
+	class:discard={(card.state & CardState.Discarding) != 0}
 	on:click={handleClick}
 	on:mouseover={handleEnter}
 	on:mouseout={handleExit}

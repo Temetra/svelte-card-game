@@ -3,10 +3,8 @@ import type { StatefulCard } from "@/modules/Cards";
 import { Suits, Ranks, CardState } from "@/modules/Cards";
 import { playSound } from "@/modules/Assets";
 import { waitFor } from "@/modules/Fetching";
-
-const avgDealDelay = 40;
-const dealDelayDeviation = 25;
-const audioDelay = 0;
+import { randomFromRange } from "@/modules/Rnd";
+import * as timing from "@/modules/Game/DealTiming";
 
 // Array to store drawn cards
 let drawn: StatefulCard[];
@@ -57,11 +55,8 @@ async function dealAllCards() {
 }
 
 async function animateDealtCard() {
-	const delayFrom = avgDealDelay - dealDelayDeviation - audioDelay;
-	const delayTo = avgDealDelay + dealDelayDeviation - audioDelay;
-
 	// Delay before dealing
-	await waitFor(randomFromRange(delayFrom, delayTo));
+	await waitFor(randomFromRange(timing.delayFrom, timing.delayTo));
 
 	// Find first hidden card in hand and change state
 	playerOneHand.update(hand => {
@@ -71,13 +66,13 @@ async function animateDealtCard() {
 	});
 
 	// Audio feedback
-	await waitFor(audioDelay);
+	await waitFor(timing.audioDelay);
 	playSound("card")
 }
 
 async function finishDealing() {
 	// Wait for last card to finish animating
-	await waitFor(avgDealDelay + dealDelayDeviation);
+	await waitFor(timing.delayFinal);
 
 	// Change state of cards
 	playerOneHand.update(hand => {
@@ -87,10 +82,6 @@ async function finishDealing() {
 
 	// Enable button
 	gameState.set(GameState.Selection);
-}
-
-function randomFromRange(min: number, max: number) : number {
-	return Math.random() * (max - min) + min;
 }
 
 function resetDeck() {
