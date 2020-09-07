@@ -31,6 +31,21 @@ test("Two pairs", () => {
 	expect(result.cards.length).toBe(4);
 });
 
+test("Two pairs again", () => {
+	let hand: Card[] = [
+		{ rank: Rank.Jack, suit: Suit.Spades },
+		{ rank: Rank.Ace, suit: Suit.Clubs },
+		{ rank: Rank.Ace, suit: Suit.Spades },
+		{ rank: Rank.Nine, suit: Suit.Clubs },
+		{ rank: Rank.Jack, suit: Suit.Hearts },
+	];
+
+	let result = getBestCombination(hand);
+
+	expect(result.combination).toBe(Combination.TwoPairs);
+	expect(result.cards.length).toBe(4);
+});
+
 test("Three of a kind", () => {
 	let hand: Card[] = [
 		{ rank: Rank.Five, suit: Suit.Clubs },

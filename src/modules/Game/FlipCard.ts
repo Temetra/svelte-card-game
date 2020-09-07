@@ -1,16 +1,30 @@
-import { playerOneHand } from "@/modules/Game/GameState";
+import { playerOneHand, gameState, GameState } from "@/modules/Game/GameState";
 import type { StatefulCard } from "@/modules/Cards";
 import { CardState } from "@/modules/Cards";
 import { playSound } from "@/modules/Assets";
 
+// Player can discard a card by flipping it
 export function flipCard(target: StatefulCard) {
 	// Audio feedback
-	playSound("card")
+	playSound("card");
+
+	// Test for gamestate change later
+	let flippedCards = false;
 	
-	// Find card in hand and set state
+	// Update hand
 	playerOneHand.update(hand => {
+		// Find card and toggle flip
 		let card = hand.find(x => x == target);
 		card.state ^= CardState.Flipped;
+
+		// Check for flipped cards
+		flippedCards = hand.filter(x => (x.state & CardState.Flipped) != 0).length > 0;
+
+		// Update finished
 		return hand;
 	});
+
+	// If cards are flipped, update gamestate
+	if (flippedCards) gameState.set(GameState.Discard);
+	else gameState.set(GameState.Selection);
 }

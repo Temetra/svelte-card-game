@@ -3,7 +3,8 @@
 	import { Combination } from "@/modules/Cards";
 	$: showScore = $playerOneScore && (
 		$gameState == GameState.Selection || 
-		$gameState == GameState.Result
+		$gameState == GameState.Discard || 
+		$gameState == GameState.Summary
 	);
 </script>
 

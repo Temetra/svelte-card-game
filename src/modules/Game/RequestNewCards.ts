@@ -4,7 +4,7 @@ import { Suits, Ranks, CardState } from "@/modules/Cards";
 import { playSound } from "@/modules/Assets";
 import { waitFor } from "@/modules/Fetching";
 
-const avgDealDelay = 400;
+const avgDealDelay = 40;
 const dealDelayDeviation = 25;
 const audioDelay = 0;
 

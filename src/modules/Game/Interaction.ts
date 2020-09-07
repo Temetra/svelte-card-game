@@ -11,13 +11,13 @@ let hand: StatefulCard[];
 playerOneHand.subscribe(x => hand = x);
 
 export function handleCardClick(event: CustomEvent<StatefulCard>) {
-	if (state == GameState.Selection) {
+	if (state == GameState.Selection || state == GameState.Discard) {
 		flipCard(event.detail);
 	}
 }
 
 export function handleCardHover(event: CustomEvent<{target:StatefulCard, enter:boolean}>) {
-	if (state == GameState.Selection) {
+	if (state == GameState.Selection || state == GameState.Discard) {
 		focusCard(event.detail);
 	}
 }
@@ -26,7 +26,7 @@ export function handleKeyboardInput(event: KeyboardEvent) {
 	if (event.repeat) return;
 
 	// Number keys flip cards when selection for drawing is possible
-	if (state == GameState.Selection) {
+	if (state == GameState.Selection || state == GameState.Discard) {
 		switch (event.code) {
 			case "Digit1": flipCard(hand[0]); break;
 			case "Digit2": flipCard(hand[1]); break;

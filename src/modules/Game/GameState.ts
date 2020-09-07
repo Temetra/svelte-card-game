@@ -6,10 +6,10 @@ export enum GameState {
 	Ready,		// waiting for player to start new hand
 	Dealing,	// animating new hand being dealt
 	Selection,	// player choosing cards to discard
+	Discard, 	// player has chosen cards to discard
 	Drawing,	// animating drawing of replacement cards
-	Result,		// final hand with score
-	Summary,	// table of previous results
-	Clear		// animating summary/cards being cleared off screen
+	Summary,	// summary of hand, table of results etc
+	Clearing	// animating summary/cards being cleared off screen
 }
 
 export const gameState = writable<GameState>(GameState.Preparing);

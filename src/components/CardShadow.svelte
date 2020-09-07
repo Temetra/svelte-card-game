@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { StatefulCard } from "@/modules/Cards";
-	import { Suit, Rank, CardState, getCardName } from "@/modules/Cards";
+	import { Suit, Rank, CardState } from "@/modules/Cards";
 	import { getCardImage } from "@/modules/Assets";
 
 	export let card: StatefulCard = { suit: Suit.Joker, rank:Rank.Ace, state:0 };

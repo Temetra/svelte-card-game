@@ -1,11 +1,15 @@
 <script lang="ts">
-	import { GameState, gameState, requestNewCards, playerOneHand } from "@/modules/Game";
+	import { GameState, gameState, requestNewCards, discardAndDraw, finishHand } from "@/modules/Game";
 	import type { StatefulCard } from "@/modules/Cards";
 	import { Suit, Rank, CardState } from "@/modules/Cards";
 	import CardGraphic from "@/components/CardGraphic.svelte";
 
 	let card: StatefulCard = { suit: Suit.Clubs, rank: Rank.Ace, state: 0 };
-	$: disabled = !($gameState == GameState.Ready || $gameState == GameState.Selection);
+	$: disabled = !($gameState == GameState.Ready 
+		|| $gameState == GameState.Selection 
+		|| $gameState == GameState.Discard
+		|| $gameState == GameState.Summary
+	);
 	$: card.state = disabled ? 0 : CardState.Spinning;
 </script>
 
@@ -30,16 +34,20 @@
 </style>
 
 <section>
+	{#if $gameState == GameState.Ready || $gameState == GameState.Dealing}
 	<button type="button" class="cyan" on:click={requestNewCards} {disabled}>
 		<span class="icon"><CardGraphic {card} /></span>
 		<span class="text">Deal cards</span>
 	</button>
-	<button type="button" class="purple" {disabled}>
+	{:else if $gameState == GameState.Discard || $gameState == GameState.Drawing}
+	<button type="button" class="purple" on:click={discardAndDraw} {disabled}>
 		<span class="icon"><CardGraphic {card} /></span>
 		<span class="text">Draw cards</span>
 	</button>
-	<button type="button" class="orange" {disabled}>
+	{:else if $gameState == GameState.Selection || $gameState == GameState.Summary}
+	<button type="button" class="orange" on:click={finishHand} {disabled}>
 		<span class="icon"><CardGraphic {card} /></span>
 		<span class="text">Finish</span>
 	</button>
+	{/if}
 </section>
