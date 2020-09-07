@@ -3,6 +3,7 @@ export * from "@/modules/Game/Deck";
 export * from "@/modules/Game/PrepareGame";
 export * from "@/modules/Game/RequestNewCards";
 export * from "@/modules/Game/FlipCard";
+export * from "@/modules/Game/FocusCard";
 export * from "@/modules/Game/Interaction";
 export * from "@/modules/Game/DiscardAndDraw"
 export * from "@/modules/Game/FinishHand"
