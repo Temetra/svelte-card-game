@@ -1,6 +1,9 @@
 import { GameState, gameState, playerOneHand, requestNewCards, discardAndDraw } from "@/modules/Game";
 import { CardState } from "@/modules/Cards";
 
+// Note: these tests take time because there are deliberate pauses for card animations
+// They are currently skipped
+
 let states: string[] = [];
 let unsubGameState;
 
@@ -19,7 +22,7 @@ beforeEach(() => {
 	unsubHands = playerOneHand.subscribe(x => hands.push(x.map(y => CardState[y.state])));
 });
 
-test("requestNewCards", async () => {
+test.skip("requestNewCards", async () => {
 	expect(states).toStrictEqual(["Preparing"]);
 	expect(hands).toStrictEqual([[]]);
 	
@@ -29,7 +32,7 @@ test("requestNewCards", async () => {
 	expect(hands).toMatchSnapshot();
 });
 
-test("DiscardAndDraw", async () => {
+test.skip("DiscardAndDraw", async () => {
 	expect(states).toStrictEqual(["Preparing"]);
 	expect(hands).toStrictEqual([[]]);
 	
