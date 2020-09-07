@@ -10,7 +10,7 @@ let prevHand: Card[] = [];
 gameStateAndHand.subscribe(updateScoreWhenHandChanged);
 
 function updateScoreWhenHandChanged([gameState, hand]: [GameState, StatefulCard[]]) {
-	if (gameState == GameState.Selecting) {
+	if (gameState == GameState.Selection) {
 		// Filter out flipped cards
 		let filteredHand = hand.filter(x => (x.state & CardState.Flipped) == 0) as Card[];
 

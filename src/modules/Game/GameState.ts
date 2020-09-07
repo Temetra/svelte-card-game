@@ -2,12 +2,14 @@ import { writable, derived } from "svelte/store";
 import type { StatefulCard, BestCombination } from "@/modules/Cards";
 
 export enum GameState {
-	Preparing,
-	Ready,
-	Dealing,
-	Selecting,
-	Drawing,
-	Finished
+	Preparing,	// loading content
+	Ready,		// waiting for player to start new hand
+	Dealing,	// animating new hand being dealt
+	Selection,	// player choosing cards to discard
+	Drawing,	// animating drawing of replacement cards
+	Result,		// final hand with score
+	Summary,	// table of previous results
+	Clear		// animating summary/cards being cleared off screen
 }
 
 export const gameState = writable<GameState>(GameState.Preparing);

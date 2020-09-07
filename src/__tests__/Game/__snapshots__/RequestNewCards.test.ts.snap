@@ -4,7 +4,7 @@ exports[`requestNewCards 1`] = `
 Array [
   "Preparing",
   "Dealing",
-  "Selecting",
+  "Selection",
 ]
 `;
 

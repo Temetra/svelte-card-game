@@ -2,14 +2,13 @@
 	import { GameState, gameState, playerOneScore } from "@/modules/Game";
 	import { Combination } from "@/modules/Cards";
 	$: showScore = $playerOneScore && (
-		$gameState == GameState.Selecting || 
-		$gameState == GameState.Finished
+		$gameState == GameState.Selection || 
+		$gameState == GameState.Result
 	);
 </script>
 
 <style type="text/scss">
 	section {
-		grid-area: score;
 		display: flex;
 		flex-flow: row wrap;
 		justify-content: center;
@@ -20,4 +19,5 @@
 	{#if showScore && $playerOneScore}
 		{Combination[$playerOneScore.combination]}
 	{/if}
+	This is the score
 </section>

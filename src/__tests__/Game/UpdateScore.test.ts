@@ -34,7 +34,7 @@ test("Combo store auto-updating", () => {
 	expect(score).toStrictEqual(null);
 
 	// Change gamestate
-	gameState.set(GameState.Selecting);
+	gameState.set(GameState.Selection);
 
 	// Check score
 	expect(score.combination).toStrictEqual(Combination.TwoPairs);
@@ -57,7 +57,7 @@ test("Combo score changing on card flip", () => {
 
 	// Set up
 	playerOneHand.set(cards);
-	gameState.set(GameState.Selecting);
+	gameState.set(GameState.Selection);
 
 	// Change card
 	playerOneHand.update(x => {
