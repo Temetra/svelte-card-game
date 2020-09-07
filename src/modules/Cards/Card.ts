@@ -11,6 +11,7 @@ export interface StatefulCard extends Card {
 	state: CardState
 }
 
+// Calculates unique index for a card
 export function getCardIndex(card: Card);
 export function getCardIndex(rank: Rank, suit: Suit);
 export function getCardIndex(x: any, y?: any) {
@@ -24,4 +25,17 @@ export function getCardIndex(x: any, y?: any) {
 	}
 
 	return null;
+}
+
+// Compares two cards
+export function compareCards(first: Card, second: Card) {
+	return first.suit != second.suit 
+		? first.suit > second.suit 
+			? 1 
+			: -1
+		: first.rank == second.rank
+			? 0
+			: first.rank > second.rank 
+				? 1 
+				: -1;
 }

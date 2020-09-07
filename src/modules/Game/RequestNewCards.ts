@@ -9,7 +9,8 @@ import * as timing from "@/modules/Game/DealTiming";
 // Array to store drawn cards
 let drawn: StatefulCard[];
 
-// Sequence for dealing a hand from a freshly shuffled deck
+// This is a player-triggered action
+// Deals a full hand from a freshly shuffled deck
 export function requestNewCards() {
 	return startDealing()
 		.then(dealAllCards)

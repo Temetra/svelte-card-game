@@ -1,25 +1,26 @@
 import { GameState, gameStateAndHand, playerOneScore } from "@/modules/Game/GameState";
 import type { StatefulCard, Card } from "@/modules/Cards";
-import { CardState, getBestCombination } from "@/modules/Cards";
+import { CardState, getBestCombination, compareCards } from "@/modules/Cards";
 import { compareArrays } from "@/modules/Collections";
 
 // Copy of previous hand
 let prevHand: Card[] = [];
 
-// Update score when either gamestate or player hand changes
+// Subscribe to store
 gameStateAndHand.subscribe(updateScoreWhenHandChanged);
 
-function updateScoreWhenHandChanged([gameState, hand]: [GameState, StatefulCard[]]) {
-	if (gameState == GameState.Selection 
-		|| gameState == GameState.Discard
-		|| gameState == GameState.Summary
+// Automatic action, updates score when either gamestate or player hand changes
+function updateScoreWhenHandChanged([state, hand]: [GameState, StatefulCard[]]) {
+	if (state == GameState.Selection 
+		|| state == GameState.Discard
+		|| state == GameState.Summary
 	) {
 		// Filter out flipped cards
 		let filteredHand = hand.filter(x => (x.state & CardState.Flipped) == 0) as Card[];
 
 		// Update score if hand has changed
 		// Ignore focus state changes
-		if (!compareArrays(filteredHand, prevHand, compareHands)) {
+		if (!compareArrays(filteredHand, prevHand, compareCards)) {
 			// Copy filtered hand for checking next time
 			prevHand = [...filteredHand];
 
@@ -34,8 +35,4 @@ function updateScoreWhenHandChanged([gameState, hand]: [GameState, StatefulCard[
 		// Reset filtered hand if gamestate changes
 		prevHand = [];
 	}
-}
-
-function compareHands(first: Card, second: Card) {
-	return first.rank == second.rank && first.suit == second.suit;
 }

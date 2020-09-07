@@ -1,3 +1,4 @@
+// Variables for controlling the timing of dealing cards
 export const avgDealDelay = 400;
 export const dealDelayDeviation = 25;
 export const audioDelay = 0;

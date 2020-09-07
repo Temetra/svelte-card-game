@@ -10,18 +10,21 @@ gameState.subscribe(x => state = x);
 let hand: StatefulCard[];
 playerOneHand.subscribe(x => hand = x);
 
+// Flip a card when clicked during selection state
 export function handleCardClick(event: CustomEvent<StatefulCard>) {
 	if (state == GameState.Selection || state == GameState.Discard) {
 		flipCard(event.detail);
 	}
 }
 
+// Focus a card when mouse is over during selection state
 export function handleCardHover(event: CustomEvent<{target:StatefulCard, enter:boolean}>) {
 	if (state == GameState.Selection || state == GameState.Discard) {
 		focusCard(event.detail);
 	}
 }
 
+// Hotkeys
 export function handleKeyboardInput(event: KeyboardEvent) {
 	if (event.repeat) return;
 

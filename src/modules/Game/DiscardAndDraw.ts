@@ -6,8 +6,11 @@ import { waitFor } from "@/modules/Fetching";
 import { randomFromRange } from "@/modules/Rnd";
 import * as timing from "@/modules/Game/DealTiming";
 
+// Array to store discarded hands
 let discarding: StatefulCard[];
 
+// This is a player-triggered action
+// Animates cards being discarded, and draws replacements
 export function discardAndDraw() {
 	return startDiscarding()
 		.then(discardCards)
