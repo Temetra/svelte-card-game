@@ -1,5 +1,5 @@
-import type { Rank } from "@/modules/Cards/Rank";
-import type { Suit } from "@/modules/Cards/Suit";
+import { Rank } from "@/modules/Cards/Rank";
+import { Suit } from "@/modules/Cards/Suit";
 import type { CardState } from "@/modules/Cards/CardState";
 
 export interface Card {
@@ -25,6 +25,28 @@ export function getCardIndex(x: any, y?: any) {
 	}
 
 	return null;
+}
+
+// Returns name of card in "Rank of Suit" format
+export function getCardName(card: Card);
+export function getCardName(suit: Suit, rank: Rank);
+export function getCardName(x: any, y?: any) {
+	let rank: Rank, suit: Suit;
+	
+	if (typeof x == "number" && y != null) {
+		// Assume func was given rank and suit
+		suit = x;
+		rank = y;
+	}
+	else if (typeof x == "object") {
+		// Assume x is a card object
+		suit = x.suit;
+		rank = x.rank;
+	}
+
+	// Return result
+	if (suit == Suit.Joker) return Suit[suit];
+	else return `${Rank[rank]} of ${Suit[suit]}`;
 }
 
 // Compares two cards
