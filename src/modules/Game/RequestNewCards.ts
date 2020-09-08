@@ -7,9 +7,6 @@ import { waitFor } from "@/modules/Fetching";
 import { randomFromRange } from "@/modules/Rnd";
 import * as timing from "@/modules/Game/DealTiming";
 
-// Array to store drawn cards
-let drawn: StatefulCard[];
-
 // This is a player-triggered action
 // Deals a full hand from a freshly shuffled deck
 export function requestNewCards() {
@@ -41,7 +38,7 @@ async function startDealing() {
 
 async function dealAllCards() {
 	// Draw 5 cards
-	drawn = drawFromDeck(5);
+	let drawn = drawFromDeck(5);
 
 	// Change state of cards
 	drawn.map(card => card.state |= CardState.Hidden);
