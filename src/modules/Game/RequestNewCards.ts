@@ -1,6 +1,5 @@
 import { GameState, gameState, playerOneHand } from "@/modules/Game/GameState";
 import { resetDeck, shuffleDeck, drawFromDeck } from "@/modules/Game/Deck";
-import type { StatefulCard } from "@/modules/Cards";
 import { CardState } from "@/modules/Cards";
 import { playSound } from "@/modules/Assets";
 import { waitFor } from "@/modules/Fetching";
