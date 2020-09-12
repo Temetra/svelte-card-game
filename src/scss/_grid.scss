@@ -10,3 +10,10 @@
 		filter:invert(100%) opacity(75%);
 	}
 }
+
+@mixin blue-grid() {
+	&.grid {
+		background-color:#1B6EB8;
+		@include background-grid;
+	}
+}

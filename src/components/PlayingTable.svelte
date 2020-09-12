@@ -3,7 +3,7 @@
 
 <style type="text/scss">
 	@import "grid";
-	
+
 	section {
 		position: absolute;
 		width: 100%;
@@ -21,20 +21,20 @@
 			height: 200rem;
 			width: 200rem;
 
-			// &.felt {
-			// 	background: #2E7D32;
-			// 	background-image: url("../images/felt.jpg");
-			// 	background-position: 50% 50%;
-			// }
+			&.felt {
+				background-color: #2E7D32;
+				background-image: url("../images/felt.jpg");
+				background-position: 50% 50%;
+				background-size: 50%;
+			}
 
 			&.grid {
-				background-color:#1B6EB8;
-				@include background-grid;
+				@include blue-grid();
 			}
 		}
 	}
 </style>
 
 <section>
-	<div class="grid"></div>
+	<div class="felt"></div>
 </section>
