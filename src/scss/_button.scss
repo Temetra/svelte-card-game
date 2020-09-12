@@ -16,11 +16,8 @@ button {
 	}
 
 	&:focus {
-		outline-color:#cccccc;
-	}
-
-	&:hover:focus {
-		outline-color:#dddddd;
+		outline: none;
+		box-shadow: 0px 0px 0px 3px white;
 	}
 
 	&:active {
@@ -29,6 +26,8 @@ button {
     
 	&:disabled {
 		background: #bfbfbf !important; 
+		outline: none;
+		box-shadow: none;
 	}
 	
 	&:disabled span.text {
@@ -55,11 +54,7 @@ button.orange {
 	}
 
 	&:focus {
-		outline-color:#C62828;
-	}
-
-	&:hover:focus {
-		outline-color:#D84315;
+		box-shadow: 0px 0px 0px 3px #ffb0aa;
 	}
 }
 
@@ -73,11 +68,7 @@ button.green {
 	}
 
 	&:focus {
-		outline-color:#1e5020;
-	}
-
-	&:hover:focus {
-		outline-color:#357d38;
+		box-shadow: 0px 0px 0px 3px #7ce482;
 	}
 }
 
@@ -91,11 +82,7 @@ button.purple {
 	}
 
 	&:focus {
-		outline-color:#311B92;
-	}
-
-	&:hover:focus {
-		outline-color:#673AB7;
+		box-shadow: 0px 0px 0px 3px #a989e0;
 	}
 }
 
@@ -109,10 +96,6 @@ button.cyan {
 	}
 
 	&:focus {
-		outline-color:#004D40;
-	}
-
-	&:hover:focus {
-		outline-color:#00796B;
+		box-shadow: 0px 0px 0px 3px #68cabc;
 	}
 }
