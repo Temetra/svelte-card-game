@@ -15,8 +15,6 @@
 		align-items: center;
 		flex-direction: column;
 		padding: 20px;
-		backdrop-filter: blur(2px);
-		background: rgba(255,255,255,0.05);
 		color: white;
 	}
 </style>

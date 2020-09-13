@@ -26,8 +26,8 @@
 		flex-flow: row wrap;
 		row-gap: 15px;
 		column-gap: 15px;
-		--card-width: #{(500px/4)};
-		--card-height: #{(700px/4)};
+		--card-width: calc(20% - 12px);
+		--card-height: 100%;
 	}
 
 	.shadows {

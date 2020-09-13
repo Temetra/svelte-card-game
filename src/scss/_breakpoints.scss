@@ -1,0 +1,21 @@
+$grid-breakpoints: (
+	mobile: 480px,
+	tablet: 1250px,
+	widescreen: 1450px
+);
+
+@mixin breakpoint-min($key) {
+	@media screen and (min-width: map-get($grid-breakpoints, $key)) { @content; }
+}
+
+@mixin breakpoint-max($key) {
+	@media screen and (max-width: map-get($grid-breakpoints, $key)) { @content; }
+}
+
+@mixin breakpoint-minmax($key1, $key2) {
+	@media screen 
+		and (min-width: map-get($grid-breakpoints, $key1)) 
+		and (max-width: map-get($grid-breakpoints, $key2)) {
+			@content;
+		}
+}
