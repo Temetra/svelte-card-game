@@ -4,8 +4,6 @@
 </script>
 
 <style type="text/scss">
-	@import "grid";
-
 	section {
 		position:absolute;
 		bottom:0;
@@ -17,7 +15,9 @@
 		align-items: center;
 		flex-direction: column;
 		padding: 20px;
-		background: white;
+		backdrop-filter: blur(2px);
+		background: rgba(255,255,255,0.05);
+		color: white;
 	}
 </style>
 

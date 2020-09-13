@@ -1,4 +1,5 @@
 <script lang="ts">
+	import Logo from "@/components/Logo.svelte";
 	import PlayingTable from "@/components/PlayingTable.svelte";
 	import PlayingCards from "@/components/PlayingCards.svelte";
 	import PlayingUI from "@/components/PlayingUI.svelte";
@@ -12,6 +13,7 @@
 
 <section>
 	<PlayingTable />
+	<Logo />
 	<PlayingCards />
 	<PlayingUI />
 </section>

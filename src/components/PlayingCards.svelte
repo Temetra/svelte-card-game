@@ -18,7 +18,7 @@
 	
 	.cards, .shadows {
 		transform-style: preserve-3d;
-		transform: translateY(-33%) translateZ(1px) rotateX(30deg);
+		transform: translateY(0) translateZ(1px) rotateX(30deg);
 		position: absolute;
 		width: (500px/4) * 5 + 15px * 4;
 		height: (700px/4);
