@@ -4,20 +4,20 @@
 <style type="text/scss">
 	section {
 		position: absolute;
-		width: 30rem;
-		height: 13rem;
-		top: 1rem;
-		left: 1rem;
+		top: 2rem;
+		left: 2rem;
+		width:24.5rem;
 
-		& img {
+		& img:nth-child(1) {
 			position: absolute;
+			width: 80%;
 			z-index: 2;
-			width: 20rem;
 		}
 
 		& img:nth-child(2) {
-			bottom: 0;
-			right: 0;
+			position: absolute;
+			width: 85%;
+			margin: 25% 0 0 14%;
 			z-index: 1;
 		}
 	}
