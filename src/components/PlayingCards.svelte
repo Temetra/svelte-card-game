@@ -15,12 +15,11 @@
 		align-items: center;
 		overflow: hidden;
 	}
-	
+
 	.cards, .shadows {
 		transform-style: preserve-3d;
 		transform: translateY(0) translateZ(1px) rotateX(30deg);
 		position: absolute;
-		width: (500px/3) * 5 + 15px * 4;
 		display: flex;
 		flex-flow: row wrap;
 		row-gap: 15px;
@@ -28,7 +27,7 @@
 
 		& > div {
 			transform-style: preserve-3d;
-			width: calc(20% - 12px);
+			width: (500px/3);
 		}
 	}
 
