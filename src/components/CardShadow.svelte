@@ -11,8 +11,7 @@
 	section {
 		position: relative;
 		width: 100%;
-		height: 100%;
-		padding-top: 71.43%;
+		padding-top: 140%;
 		transform-style: preserve-3d;
 		transform: scale3d(1.15,1.15,1) translateX(0px) translateY(0px) translateZ(0px) rotateX(0deg) rotateY(0deg);
 		transition: transform 250ms;

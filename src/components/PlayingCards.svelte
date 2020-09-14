@@ -21,7 +21,6 @@
 		transform: translateY(0) translateZ(1px) rotateX(30deg);
 		position: absolute;
 		width: (500px/3) * 5 + 15px * 4;
-		height: (700px/3);
 		display: flex;
 		flex-flow: row wrap;
 		row-gap: 15px;

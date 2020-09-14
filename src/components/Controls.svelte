@@ -25,7 +25,6 @@
 	.icon {
 		perspective: 100px;
 		width: #{(500px/32)};
-		height: #{(700px/32)};
 	}
 
 	.text {
