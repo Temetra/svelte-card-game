@@ -8,7 +8,8 @@
 		position: absolute;
 		top: 1rem;
 		left: 1rem;
-		width: 12rem;
+		width: 40vmin;
+		height: 20vmin;
 
 		& img:nth-child(1) {
 			position: absolute;
@@ -20,22 +21,6 @@
 			position: absolute;
 			width: 80%;
 			mix-blend-mode: lighten;
-		}
-	}
-
-	@include breakpoint-min(tablet) {
-		section {
-			top: 2rem;
-			left: 2rem;
-			width: 18rem;
-		}
-	}
-
-	@include breakpoint-min(widescreen) {
-		section {
-			top: 2rem;
-			left: 2rem;
-			width: 24rem;
 		}
 	}
 </style>
