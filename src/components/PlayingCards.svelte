@@ -24,7 +24,8 @@
 		transform-style: preserve-3d;
 		transform: translateY(0) translateZ(1px) rotateX(30deg);
 
-		width: calc((40vmax + 800px) / 2);
+		// wrapped in calc to work around min/max sass issue
+		width: calc(min(calc(40vmin + 400px), 90vw));
 		margin-top: 5vh;
 
 		display: flex;
