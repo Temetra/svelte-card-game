@@ -28,6 +28,7 @@
 		column-gap: 15px;
 
 		& > div {
+			transform-style: preserve-3d;
 			width: calc(20% - 12px);
 		}
 	}
