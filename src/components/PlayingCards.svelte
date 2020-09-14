@@ -24,7 +24,7 @@
 		transform-style: preserve-3d;
 		transform: translateY(0) translateZ(1px) rotateX(30deg);
 
-		width: 70vmax;
+		width: calc((40vmax + 800px) / 2);
 		margin-top: 5vh;
 
 		display: flex;
@@ -35,13 +35,6 @@
 		& > div {
 			transform-style: preserve-3d;
 			width: calc(20% - 12px);
-		}
-	}
-
-	// Limit max size of cards
-	@include breakpoint-min(tablet) {
-		.cards, .shadows {
-			width: 95vmin;
 		}
 	}
 
