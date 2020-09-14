@@ -20,14 +20,16 @@
 		transform-style: preserve-3d;
 		transform: translateY(0) translateZ(1px) rotateX(30deg);
 		position: absolute;
-		width: (500px/4) * 5 + 15px * 4;
-		height: (700px/4);
+		width: (500px/3) * 5 + 15px * 4;
+		height: (700px/3);
 		display: flex;
 		flex-flow: row wrap;
 		row-gap: 15px;
 		column-gap: 15px;
-		--card-width: calc(20% - 12px);
-		--card-height: 100%;
+
+		& > div {
+			width: calc(20% - 12px);
+		}
 	}
 
 	.shadows {
@@ -38,12 +40,12 @@
 <section>
 	<div class="shadows">
 		{#each $playerOneHand as card, index}
-			<CardShadow {card} {index} />
+			<div><CardShadow {card} {index} /></div>
 		{/each}
 	</div>
 	<div class="cards">
 		{#each $playerOneHand as card}
-			<CardGraphic {card} on:click={handleCardClick} on:hover={handleCardHover} />
+			<div><CardGraphic {card} on:click={handleCardClick} on:hover={handleCardHover} /></div>
 		{/each}
 	</div>
 </section>

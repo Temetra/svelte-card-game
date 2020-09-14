@@ -20,12 +20,12 @@
 		justify-content: center;
 		row-gap: 15px;
 		column-gap: 15px;
-		--card-width: #{(500px/32)};
-		--card-height: #{(700px/32)};
 	}
 
 	.icon {
 		perspective: 100px;
+		width: #{(500px/32)};
+		height: #{(700px/32)};
 	}
 
 	.text {

@@ -10,21 +10,22 @@
 <style type="text/scss">
 	section {
 		position: relative;
+		width: 100%;
+		height: 100%;
+		padding-top: 71.43%;
 		transform-style: preserve-3d;
 		transform: scale3d(1.15,1.15,1) translateX(0px) translateY(0px) translateZ(0px) rotateX(0deg) rotateY(0deg);
 		transition: transform 250ms;
 		opacity: 0.2;
 
-		// Card dimensions with fallback
-		width:var(--card-width, 500px);
-		height:var(--card-height, 700px);
-
 		img {
 			position: absolute;
 			transform-style: preserve-3d;
-			left:0;
 			width: 100%;
-			height: 100%;
+			top: 0;
+			left: 0;
+			bottom: 0;
+			right: 0;
 		}
 
 		&.deal {
