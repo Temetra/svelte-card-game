@@ -27,22 +27,25 @@
 		transform: translateX(0px) rotateX(30deg) rotateY(0deg);
 		width: calc(min(calc(40vmin + 400px), 90vw));
 		margin-top: 5vh;
+		display: flex;
+		justify-content: flex-end;
+		align-items: center;
 
-		span {
-			display: block;
+		div {
 			color: #ffffffe0;
-			font-size: calc(min(8vmax, 32pt));
-			margin-top: 40%;
+			filter: drop-shadow(0 0 2px white);
+			font-size: calc(max(6vmin, 20pt));
+			margin-bottom: 40%;
 		}
 	}
 </style>
 
 <section>
 	<div class="score">
-		<span>
+		<div>
 			{#if showScore && $playerOneScore}
 				{Combination[$playerOneScore.combination]}
 			{/if}
-		</span>
+		</div>
 	</div>
 </section>
