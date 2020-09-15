@@ -5,8 +5,7 @@
 		"baseUrl": ".",
 		"paths": {
 			"@/*": ["src/*"]
-		},
-		"resolveJsonModule": true
+		}
 	},
 	"include": ["src/**/*", "src/modules/**/*"],
 	"exclude": ["node_modules/*", "__sapper__/*", "public/*"],

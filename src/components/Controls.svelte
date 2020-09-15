@@ -2,7 +2,7 @@
 	import { GameState, gameState, requestNewCards, discardAndDraw, finishHand } from "@/modules/Game";
 	import type { StatefulCard } from "@/modules/Cards";
 	import { Suit, Rank, CardState } from "@/modules/Cards";
-	import { geti18nText as text } from "@/modules/Text";
+	import { geti18nText as text } from "@/modules/Assets";
 	import CardGraphic from "@/components/CardGraphic.svelte";
 
 	let card: StatefulCard = { suit: Suit.Clubs, rank: Rank.Ace, state: 0 };

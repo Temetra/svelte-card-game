@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { GameState, gameState, playerOneScore } from "@/modules/Game";
 	import { Combination } from "@/modules/Cards";
-	import { geti18nText as text } from "@/modules/Text";
+	import { geti18nText as text } from "@/modules/Assets";
 
 	let combination: string;
 	playerOneScore.subscribe(x => {

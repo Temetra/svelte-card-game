@@ -5,7 +5,7 @@ global.fetch = jest.fn((input: RequestInfo, init?: RequestInit) =>
 	Promise.resolve({
 		ok: true, 
 		blob: () => Promise.resolve(getBlob(input)), 
-		json: null,
+		json: () => Promise.resolve(getJson(input)),
 		headers: null, 
 		redirected: null, 
 		status: null,
@@ -22,6 +22,12 @@ global.fetch = jest.fn((input: RequestInfo, init?: RequestInit) =>
 	})
 );
 
+declare global {
+	interface JSON {
+		parse(text: Buffer, reviver?: (key: any, value: any) => any): any;
+	}
+}
+
 function getBlob(input: RequestInfo) {
 	let filename = path.resolve(process.cwd(), "public", input.toString());
 	let data = fs.readFileSync(filename);
@@ -30,10 +36,29 @@ function getBlob(input: RequestInfo) {
 	return new Blob([arraybuffer], { type:getMimeType(filename) });
 }
 
-function getMimeType(path: string) {
-	let type = "application/octet-stream";
-	if (path.endsWith(".svg")) type = "image/svg+xml";
-	else if (path.endsWith(".mp3")) type = "audio/mpeg";
+function getJson(input: RequestInfo) {
+	let filename = path.resolve(process.cwd(), "public", input.toString());
+	return JSON.parse(fs.readFileSync(filename));
+}
+
+function getMimeType(uri: string) {
+	let type: string;
+
+	switch (path.extname(uri)) {
+		case ".svg":
+			type = "image/svg+xml";
+			break;
+		case ".mp3":
+			type = "audio/mpeg";
+			break;
+		case ".json":
+			type = "application/json";
+			break;
+		default:
+			type = "application/octet-stream"
+			break;
+	}
+
 	return type;
 }
 
