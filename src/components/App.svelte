@@ -5,7 +5,8 @@
 	import Logo from "@/components/Logo.svelte";
 	import PlayingTable from "@/components/PlayingTable.svelte";
 	import PlayingCards from "@/components/PlayingCards.svelte";
-	import PlayingUI from "@/components/PlayingUI.svelte";
+	import Score from "@/components/Score.svelte";
+	import Controls from "@/components/Controls.svelte";
 
 	onMount(async () => await prepareGame());
 </script>
@@ -17,6 +18,7 @@
 {:else}
 	<PlayingTable />
 	<Logo />
+	<Score />
 	<PlayingCards />
-	<PlayingUI />
+	<Controls />
 {/if}

@@ -15,11 +15,13 @@
 
 <style type="text/scss">
 	section {
+		position:absolute;
+		bottom:0;
+		width:100%;
+		padding: 20px;
 		display: flex;
-		flex-flow: row wrap;
 		justify-content: center;
-		row-gap: 15px;
-		column-gap: 15px;
+		align-items: center;
 	}
 
 	.icon {
