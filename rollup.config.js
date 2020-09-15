@@ -12,6 +12,7 @@ const production = !process.env.ROLLUP_WATCH;
 import path from "path";
 import alias from "@rollup/plugin-alias";
 import babel from "@rollup/plugin-babel";
+import json from "@rollup/plugin-json";
 import scss from "rollup-plugin-scss";
 import svelteSVG from "rollup-plugin-svelte-svg";
 import visualizer from "rollup-plugin-visualizer";
@@ -58,6 +59,9 @@ export default {
 
 		// Import SVG files as components
 		svelteSVG(),
+
+		// Import JSON
+		json(),
 
 		// Processes SCSS imported from other JS files and plugins
 		scss({
