@@ -1,8 +1,6 @@
 import svelte from 'rollup-plugin-svelte';
 import resolve from '@rollup/plugin-node-resolve';
 import commonjs from '@rollup/plugin-commonjs';
-import serve from "rollup-plugin-serve";
-import livereload from 'rollup-plugin-livereload';
 import { terser } from 'rollup-plugin-terser';
 import sveltePreprocess from 'svelte-preprocess';
 import typescript from '@rollup/plugin-typescript';
@@ -11,21 +9,26 @@ const production = !process.env.ROLLUP_WATCH;
 
 import path from "path";
 import alias from "@rollup/plugin-alias";
+import del from "rollup-plugin-delete";
 import scss from "rollup-plugin-scss";
 import postcss from "postcss";
 import autoprefixer from "autoprefixer";
 import babel from "@rollup/plugin-babel";
 import visualizer from "rollup-plugin-visualizer";
+import browsersync from "rollup-plugin-browsersync";
 
 export default {
-	input: 'src/main.ts',
+	input: "src/main.ts",
 	output: {
 		sourcemap: !production,
-		format: 'iife',
-		name: 'app',
-		file: 'public/build/bundle.js'
+		format: "esm",
+		name: "app",
+		dir: "public/build"
 	},
 	plugins: [
+		// Clean output dir
+		del({ targets: "public/build/*" }),
+
 		// Import aliases for files other than .ts
 		alias({
 			entries: [{ find: "@", replacement: path.resolve(__dirname, "src") }],
@@ -39,7 +42,7 @@ export default {
 		// https://github.com/rollup/plugins/tree/master/packages/commonjs
 		resolve({
 			browser: true,
-			dedupe: ['svelte']
+			dedupe: ["svelte"]
 		}),
 
 		// Compile Svelte components
@@ -73,18 +76,13 @@ export default {
 			sourceMap: !production
 		}),
 
-		// In dev mode, call `npm run start` once
-		// the bundle has been generated
-		!production && serve({
-			open: false,
-			contentBase: "public",
-			host: "0.0.0.0",
-			port: 5000
-		}),
-
 		// Watch the `public` directory and refresh the
 		// browser on changes when not in production
-		!production && livereload('public'),
+		!production && browsersync({
+			open: false,
+			server: "public",
+			port: 5000
+		}),
 
 		// Transpile
 		production && babel({

@@ -1,6 +1,5 @@
 import { loadingStatus } from "@/modules/Assets/LoadingStatus";
 import { fetchFiles } from "@/modules/Fetching";
-import { AudioContext } from "standardized-audio-context";
 
 // Audio context
 let audioCtx: AudioContext;
@@ -13,23 +12,35 @@ export let playSound = async (name: string) => {};
 
 // Returns promise to preload sounds into bank
 export function prepareAudio() {
-	try {
-		audioCtx = new AudioContext();
-	
-		const files = {
-			"blip": "sounds/blip.mp3",
-			"card": "sounds/card-hard.mp3",
-			"slide": "sounds/card-soft.mp3"
-		};
-	
-		// Return a promise to load images
-		return fetchFiles(files, processResponse, updateProgress)
-			.then(data => sounds = data)
-			.then(() => playSound = playSoundInternal);
+	// Sounds to load
+	const files = {
+		"blip": "sounds/blip.mp3",
+		"card": "sounds/card-hard.mp3",
+		"slide": "sounds/card-soft.mp3"
+	};
+
+	// Return a promise to load images
+	return createAudioContext()
+		.then(() => fetchFiles(files, processResponse, updateProgress))
+		.then(data => sounds = data)
+		.then(() => playSound = playSoundInternal)
+		.catch(error => console.log(error));
+}
+
+async function createAudioContext() {
+	if (window.AudioContext) {
+		// Use native AudioContext
+		audioCtx = new window.AudioContext();
 	}
-	catch (error) {
-		console.log(error);
+	else if (window.webkitAudioContext) {
+		// Dynamically load this larger module
+		await import("standardized-audio-context").then(({ AudioContext }) => {
+			audioCtx = new AudioContext() as unknown as AudioContext;
+		});
 	}
+
+	// Throw error so promise chain can abort loading
+	if (!audioCtx) throw new Error("Audio context not created");
 }
 
 // Get ArrayBuffer from response, convert to AudioBuffer
