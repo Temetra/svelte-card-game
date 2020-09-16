@@ -1,5 +1,6 @@
 import { loadingStatus } from "@/modules/Assets/LoadingStatus";
 import { fetchFiles } from "@/modules/Fetching";
+import { AudioContext } from "standardized-audio-context";
 
 // Audio context
 let audioCtx: AudioContext;
@@ -12,22 +13,19 @@ export let playSound = async (name: string) => {};
 
 // Returns promise to preload sounds into bank
 export function prepareAudio() {
-	const AudioContext = window.AudioContext || window.webkitAudioContext;
-
-	if (AudioContext) {
-		audioCtx = new AudioContext();
-		
-		const files = {
-			"blip": "sounds/blip.mp3",
-			"card": "sounds/card-hard.mp3",
-			"slide": "sounds/card-soft.mp3"
-		};
+	audioCtx = new AudioContext();
 	
-		// Return a promise to load images
-		return fetchFiles(files, processResponse, updateProgress)
-			.then(data => sounds = data)
-			.then(() => playSound = playSoundInternal);
-	}
+	const files = {
+		"blip": "sounds/blip.mp3",
+		"card": "sounds/card-hard.mp3",
+		"slide": "sounds/card-soft.mp3"
+	};
+
+	// Return a promise to load images
+	return fetchFiles(files, processResponse, updateProgress)
+		.then(data => sounds = data)
+		.then(() => playSound = playSoundInternal)
+		.catch(/* ignore sound issues */);
 }
 
 // Get ArrayBuffer from response, convert to AudioBuffer

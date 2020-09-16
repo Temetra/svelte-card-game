@@ -11,14 +11,16 @@ const production = !process.env.ROLLUP_WATCH;
 
 import path from "path";
 import alias from "@rollup/plugin-alias";
-import babel from "@rollup/plugin-babel";
 import scss from "rollup-plugin-scss";
+import postcss from "postcss";
+import autoprefixer from "autoprefixer";
+import babel from "@rollup/plugin-babel";
 import visualizer from "rollup-plugin-visualizer";
 
 export default {
 	input: 'src/main.ts',
 	output: {
-		sourcemap: true,
+		sourcemap: !production,
 		format: 'iife',
 		name: 'app',
 		file: 'public/build/bundle.js'
@@ -60,6 +62,7 @@ export default {
 			output: "public/build/bundle.css",
 			outputStyle: production ? "compressed" : "",
 			sourceMap: !production,
+			processor: css => postcss([autoprefixer])
 		}),
 
 		// Convert CommonJS modules to ES6
@@ -87,7 +90,7 @@ export default {
 		production && babel({
 			extensions: [".js", ".jsx", ".es6", ".es", ".mjs", ".svelte"],
 			babelHelpers: "runtime",
-			presets: [["@babel/preset-env", { targets: "> 0.25%, not dead" }]],
+			presets: [["@babel/preset-env"]],
 			plugins: ["@babel/plugin-transform-runtime"]
 		}),
 

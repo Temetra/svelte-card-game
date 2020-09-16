@@ -30,12 +30,15 @@
 
 		display: flex;
 		flex-flow: row wrap;
-		row-gap: 15px;
-		column-gap: 15px;
 
 		& > div {
 			transform-style: preserve-3d;
 			width: calc(20% - 12px);
+			margin-right:15px;
+
+			&:last-child {
+				margin-right: 0;
+			}
 		}
 	}
 
