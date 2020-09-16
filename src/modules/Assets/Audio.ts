@@ -13,19 +13,23 @@ export let playSound = async (name: string) => {};
 
 // Returns promise to preload sounds into bank
 export function prepareAudio() {
-	audioCtx = new AudioContext();
+	try {
+		audioCtx = new AudioContext();
 	
-	const files = {
-		"blip": "sounds/blip.mp3",
-		"card": "sounds/card-hard.mp3",
-		"slide": "sounds/card-soft.mp3"
-	};
-
-	// Return a promise to load images
-	return fetchFiles(files, processResponse, updateProgress)
-		.then(data => sounds = data)
-		.then(() => playSound = playSoundInternal)
-		.catch(/* ignore sound issues */);
+		const files = {
+			"blip": "sounds/blip.mp3",
+			"card": "sounds/card-hard.mp3",
+			"slide": "sounds/card-soft.mp3"
+		};
+	
+		// Return a promise to load images
+		return fetchFiles(files, processResponse, updateProgress)
+			.then(data => sounds = data)
+			.then(() => playSound = playSoundInternal);
+	}
+	catch (error) {
+		console.log(error);
+	}
 }
 
 // Get ArrayBuffer from response, convert to AudioBuffer
