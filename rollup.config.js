@@ -66,6 +66,8 @@ export default {
 			outputStyle: production ? "compressed" : "",
 			sourceMap: !production,
 			processor: css => postcss([autoprefixer])
+				.process(css)
+				.then(result => result.css)
 		}),
 
 		// Convert CommonJS modules to ES6
