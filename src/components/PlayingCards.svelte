@@ -5,15 +5,7 @@
 </script>
 
 <style type="text/scss">
-	@import "breakpoints";
-
 	section {
-		perspective: 1000px;
-
-		position:absolute;
-		height: 100%;
-		width: 100%;
-
 		display: flex;
 		justify-content: center;
 		align-items: center;
@@ -24,9 +16,7 @@
 		transform-style: preserve-3d;
 		transform: translateY(0) translateZ(1px) rotateX(30deg);
 
-		// wrapped in calc to work around min/max sass issue
-		width: calc(min(calc(40vmin + 400px), 90vw));
-		margin-top: 5vh;
+		width: 80vmin;
 
 		display: flex;
 		flex-flow: row wrap;
@@ -47,14 +37,14 @@
 	}
 </style>
 
-<section>
+<section class="shared-perspective">
 	<div class="shadows">
 			{#each $playerOneHand as card, index}
 			<div><CardShadow {card} {index} /></div>
 		{/each}
 	</div>
 </section>
-<section>
+<section class="shared-perspective">
 	<div class="cards">
 		{#each $playerOneHand as card}
 			<div><CardGraphic {card} on:click={handleCardClick} on:hover={handleCardHover} /></div>

@@ -5,14 +5,10 @@
 	@import "grid";
 
 	section {
-		position: absolute;
-		width: 100%;
-		height: 100%;
 		overflow: hidden;
 		display: flex;
 		justify-content: center;
 		align-items: center;
-		perspective: 1000px;
 
 		div {
 			position: absolute;
@@ -35,6 +31,6 @@
 	}
 </style>
 
-<section>
-	<div class="felt"></div>
+<section class="shared-perspective">
+	<div class="grid"></div>
 </section>

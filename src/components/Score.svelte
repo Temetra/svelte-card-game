@@ -9,7 +9,7 @@
 			combination = text(`Combinations.${Combination[x.combination]}`);
 		}
 	});
-	
+
 	$: showScore = $playerOneScore && (
 		$gameState == GameState.Selection || 
 		$gameState == GameState.Discard || 
@@ -17,14 +17,12 @@
 	);
 </script>
 
+<svelte:head>
+	<link href="https://fonts.googleapis.com/css2?family=Lora:wght@600&display=swap" rel="stylesheet"> 
+</svelte:head>
+
 <style type="text/scss">
 	section {
-		perspective: 1000px;
-
-		position:absolute;
-		height: 100%;
-		width: 100%;
-
 		display: flex;
 		justify-content: center;
 		align-items: center;
@@ -36,20 +34,19 @@
 		transform: translateX(0px) rotateX(30deg) rotateY(0deg);
 
 		// Scaling width, matches card container
-		width: calc(min(calc(40vmin + 400px), 90vw));
-		margin-top: 5vh;
+		width: 90vmin;
+		height: 45vmin;
 
 		display: flex;
-		justify-content: flex-end;
-		align-items: center;
+		justify-content: center;
+		align-items: flex-start;
 
 		div {
-			// Aspect ratio, taller than wide
-			margin-bottom: 40%;
-
-			color: #ffffffb0;
+			color: #ffffff85;
 			filter: drop-shadow(0 0 2px white);
 			font-size: calc(max(6vmin, 20pt));
+			font-family: 'Lora', serif;
+			text-transform: uppercase;
 		}
 	}
 
@@ -65,7 +62,7 @@
 	}
 </style>
 
-<section>
+<section class="shared-perspective">
 	<div class="score" class:showScore>
 		<div>
 			{combination}
