@@ -1,6 +1,7 @@
 import svelte from 'rollup-plugin-svelte';
 import resolve from '@rollup/plugin-node-resolve';
 import commonjs from '@rollup/plugin-commonjs';
+import livereload from "rollup-plugin-livereload";
 import { terser } from 'rollup-plugin-terser';
 import sveltePreprocess from 'svelte-preprocess';
 import typescript from '@rollup/plugin-typescript';
@@ -9,13 +10,33 @@ const production = !process.env.ROLLUP_WATCH;
 
 import path from "path";
 import alias from "@rollup/plugin-alias";
-import del from "rollup-plugin-delete";
+import babel from "@rollup/plugin-babel";
 import scss from "rollup-plugin-scss";
 import postcss from "postcss";
 import autoprefixer from "autoprefixer";
-import babel from "@rollup/plugin-babel";
 import visualizer from "rollup-plugin-visualizer";
-import browsersync from "rollup-plugin-browsersync";
+import del from "rollup-plugin-delete";
+
+function serve() {
+	let server;
+
+	function toExit() {
+		if (server) server.kill(0);
+	}
+
+	return {
+		writeBundle() {
+			if (server) return;
+			server = require('child_process').spawn('npm', ['run', 'start', '--', '--dev'], {
+				stdio: ['ignore', 'inherit', 'inherit'],
+				shell: true
+			});
+
+			process.on('SIGTERM', toExit);
+			process.on('exit', toExit);
+		}
+	};
+}
 
 export default {
 	input: "src/main.ts",
@@ -47,8 +68,11 @@ export default {
 
 		// Compile Svelte components
 		svelte({
-			// enable run-time checks when not in production
-			dev: !production,
+			compilerOptions: {
+				// enable run-time checks when not in production
+				dev: !production,
+			},
+
 			// Processes SCSS embedded within Svelte files
 			preprocess: sveltePreprocess({
 				scss: {
@@ -56,6 +80,7 @@ export default {
 					sourceMap: !production
 				}
 			}),
+
 			// Emit CSS for scss plugin to bundle
 			emitCss: true
 		}),
@@ -78,13 +103,13 @@ export default {
 			sourceMap: !production
 		}),
 
+		// In dev mode, call `npm run start` once
+		// the bundle has been generated
+		!production && serve(),
+
 		// Watch the `public` directory and refresh the
 		// browser on changes when not in production
-		!production && browsersync({
-			open: false,
-			server: "public",
-			port: 5000
-		}),
+		!production && livereload('public'),
 
 		// Transpile
 		production && babel({
